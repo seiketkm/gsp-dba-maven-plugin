@@ -211,6 +211,21 @@
             <!--<version>11.2.0.2.0</version>-->
             <!--<scope>test</scope>-->
         <!--</dependency>-->
+        
+        <!-- Test -->
+       <dependency>
+          <groupId>net.sf.dozer</groupId>
+          <artifactId>dozer</artifactId>
+          <version>5.4.0</version>
+          <scope>test</scope>
+        </dependency>
+        
+		<dependency>
+		  <groupId>org.postgresql</groupId>
+		  <artifactId>postgresql</artifactId>
+		  <version>9.4-1206-jdbc42</version>
+		  <scope>test</scope>
+		</dependency>
 
     </dependencies>
 

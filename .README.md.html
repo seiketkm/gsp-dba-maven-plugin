@@ -1,0 +1,1202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>C:\nablarch\work\nablarch_dev\gsp-dba-maven-plugin\.README.md.html</title>
+
+
+<style type="text/css">
+body {
+	color: #333;
+	font: 13px/1.4 "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+	padding: 0;
+	margin: 0;
+}
+
+a {
+	background: transparent;
+	color: #4183c4;
+	text-decoration: none;
+}
+
+a:active,
+a:hover {
+	outline: 0 none;
+	text-decoration: underline;
+}
+
+abbr[title] {
+	border-bottom: 1px dotted;
+}
+
+b,
+strong {
+	font-weight: bold;
+}
+
+dfn {
+	font-style: italic;
+}
+h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+mark {
+	background: #ff0;
+	color: #000;
+}
+small {
+	font-size: 80%;
+}
+sub, sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup {
+	top: -0.5em;
+}
+sub {
+	bottom: -0.25em;
+}
+img {
+	border: 0 none;
+}
+svg:not(:root) {
+	overflow: hidden;
+}
+figure {
+	margin: 1em 40px;
+}
+hr {
+	box-sizing: content-box;
+	height: 0;
+}
+
+code,
+kbd,
+pre,
+samp {
+	font-family: monospace,monospace;
+	font-size: 1em;
+}
+
+pre {
+	overflow: auto;
+	font: 12px Consolas,"Liberation Mono",Menlo,Courier,monospace;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.markdown-body {
+	padding: 30px;
+	font-size: 16px;
+	line-height: 1.6;
+	word-wrap: break-word;
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body .absent {
+	color: #c00;
+}
+
+.markdown-body .anchor {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	display: block;
+	padding-right: 6px;
+	padding-left: 30px;
+	margin-left: -30px;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	position: relative;
+	margin-top: 1em;
+	margin-bottom: 16px;
+	font-weight: bold;
+	line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	display: none;
+	color: #000;
+	vertical-align: middle;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	padding-left: 8px;
+	margin-left: -30px;
+	line-height: 1;
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	display: inline-block;
+}
+
+.markdown-body h1 tt,
+.markdown-body h1 code,
+.markdown-body h2 tt,
+.markdown-body h2 code,
+.markdown-body h3 tt,
+.markdown-body h3 code,
+.markdown-body h4 tt,
+.markdown-body h4 code,
+.markdown-body h5 tt,
+.markdown-body h5 code,
+.markdown-body h6 tt,
+.markdown-body h6 code {
+	font-size: inherit;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2.25em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.75em;
+	line-height: 1.225;
+	border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+	font-size: 1.5em;
+	line-height: 1.43;
+}
+
+.markdown-body h4 {
+	font-size: 1.25em;
+}
+
+.markdown-body h5 {
+	font-size: 1em;
+}
+
+.markdown-body h6 {
+	font-size: 1em;
+	color: #777;
+}
+
+.markdown-body p,.markdown-body blockquote,
+.markdown-body ul,.markdown-body ol,
+.markdown-body dl,.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 4px;
+	padding: 0;
+	margin: 16px 0;
+	background-color: #e7e7e7;
+	border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul.no-list,
+.markdown-body ol.no-list {
+	padding: 0;
+	list-style-type: none;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+	padding: 0 15px;
+	color: #777;
+	border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+	word-break: normal;
+	word-break: keep-all;
+}
+
+.markdown-body table th {
+	font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f8f8f8;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.markdown-body span.frame {
+	display: block;
+	overflow: hidden;
+}
+
+.markdown-body span.frame>span {
+	display: block;
+	float: left;
+	width: auto;
+	padding: 7px;
+	margin: 13px 0 0;
+	overflow: hidden;
+	border: 1px solid #ddd;
+}
+
+.markdown-body span.frame span img {
+	display: block;
+	float: left;
+}
+
+.markdown-body span.frame span span {
+	display: block;
+	padding: 5px 0 0;
+	clear: both;
+	color: #333;
+}
+
+.markdown-body span.align-center {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+
+.markdown-body span.align-center>span {
+	display: block;
+	margin: 13px auto 0;
+	overflow: hidden;
+	text-align: center;
+}
+
+.markdown-body span.align-center span img {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.markdown-body span.align-right {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+
+.markdown-body span.align-right>span {
+	display: block;
+	margin: 13px 0 0;
+	overflow: hidden;
+	text-align: right;
+}
+
+.markdown-body span.align-right span img {
+	margin: 0;
+	text-align: right;
+}
+
+.markdown-body span.float-left {
+	display: block;
+	float: left;
+	margin-right: 13px;
+	overflow: hidden;
+}
+
+.markdown-body span.float-left span {
+	margin: 13px 0 0;
+}
+
+.markdown-body span.float-right {
+	display: block;
+	float: right;
+	margin-left: 13px;
+	overflow: hidden;
+}
+
+.markdown-body span.float-right>span {
+	display: block;
+	margin: 13px auto 0;
+	overflow: hidden;
+	text-align: right;
+}
+
+.markdown-body code,.markdown-body tt {
+	padding: 0;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(0,0,0,0.04);
+	border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after,
+.markdown-body tt:before,
+.markdown-body tt:after {
+	letter-spacing: -0.2em;
+	content: "\00a0";
+}
+
+.markdown-body code br,
+.markdown-body tt br {
+	display: none;
+}
+
+.markdown-body del code {
+	text-decoration: inherit;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f7f7f7;
+	border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre code,
+.markdown-body pre tt {
+	display: inline;
+	max-width: initial;
+	padding: 0;
+	margin: 0;
+	overflow: initial;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after,
+.markdown-body pre tt:before,
+.markdown-body pre tt:after {
+	content: normal;
+}
+
+.highlight .pl-coc,
+.highlight .pl-entl,
+.highlight .pl-entm,
+.highlight .pl-eoa,
+.highlight .pl-mai .pl-sf,
+.highlight .pl-mm,
+.highlight .pl-pdv,
+.highlight .pl-sc,
+.highlight .pl-som,
+.highlight .pl-sr,
+.highlight .pl-v,
+.highlight .pl-vpf {
+	color: #0086b3;
+}
+.highlight .pl-eoac,
+.highlight .pl-mdht,
+.highlight .pl-mi1,
+.highlight .pl-mri,
+.highlight .pl-va,
+.highlight .pl-vpu {
+	color: #008080;
+}
+.highlight .pl-c,
+.highlight .pl-pdc {
+	color: #b4b7b4;
+	font-style: italic;
+}
+.highlight .pl-k,
+.highlight .pl-ko,
+.highlight .pl-kolp,
+.highlight .pl-mc,
+.highlight .pl-mr,
+.highlight .pl-ms,
+.highlight .pl-s,
+.highlight .pl-sok,
+.highlight .pl-st {
+	color: #6e5494;
+}
+.highlight .pl-ef,
+.highlight .pl-enf,
+.highlight .pl-enm,
+.highlight .pl-entc,
+.highlight .pl-eoi,
+.highlight .pl-sf,
+.highlight .pl-smc {
+	color: #d12089;
+}
+.highlight .pl-ens,
+.highlight .pl-eoai,
+.highlight .pl-kos,
+.highlight .pl-mh .pl-pdh,
+.highlight .pl-mp,
+.highlight .pl-pde,
+.highlight .pl-stp {
+	color: #458;
+}
+.highlight .pl-enti {
+	color: #d12089;
+	font-weight: bold;
+}
+.highlight .pl-cce,
+.highlight .pl-enc,
+.highlight .pl-kou,
+.highlight .pl-mq {
+	color: #f93;
+}
+.highlight .pl-mp1 .pl-sf {
+	color: #458;
+	font-weight: bold;
+}
+.highlight .pl-cos,
+.highlight .pl-ent,
+.highlight .pl-md,
+.highlight .pl-mdhf,
+.highlight .pl-ml,
+.highlight .pl-pdc1,
+.highlight .pl-pds,
+.highlight .pl-s1,
+.highlight .pl-scp,
+.highlight .pl-sol {
+	color: #df5000;
+}
+.highlight .pl-c1,
+.highlight .pl-cn,
+.highlight .pl-pse,
+.highlight .pl-pse .pl-s2,
+.highlight .pl-vi {
+	color: #a31515;
+}
+.highlight .pl-mb,
+.highlight .pl-pdb {
+	color: #df5000;
+	font-weight: bold;
+}
+.highlight .pl-mi,
+.highlight .pl-pdi {
+	color: #6e5494;
+	font-style: italic;
+}
+.highlight .pl-ms1 {
+	background-color: #f5f5f5;
+}
+.highlight .pl-mdh,
+.highlight .pl-mdi {
+	font-weight: bold;
+}
+.highlight .pl-mdr {
+	color: #0086b3;
+	font-weight: bold;
+}
+.highlight .pl-s2 {
+	color: #333;
+}
+.highlight .pl-ii {
+	background-color: #df5000;
+	color: #fff;
+}
+.highlight .pl-ib {
+	background-color: #f93;
+}
+.highlight .pl-id {
+	background-color: #a31515;
+	color: #fff;
+}
+.highlight .pl-iu {
+	background-color: #b4b7b4;
+}
+.highlight .pl-mo {
+	color: #969896;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+function getDocumentScrollTop() 
+{
+   var res = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
+   // alert(res);
+   return res;
+}
+
+function setDocumentScrollTop(ypos) 
+{
+	window.scrollTo(0, ypos);
+}
+
+</script>
+
+
+</head>
+<body class="markdown-body">
+<h1> <a id="user-content-gsp-dba-maven-plugin" class="anchor" href="#gsp-dba-maven-plugin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>gsp-dba-maven-plugin</h1> 
+<p>gsp-dba-maven-pluginは、DBAのルーチンワークを自動化し、本来のデータモデリング作業に 集中できるようにするためのツールです。</p> 
+<p>以下の操作が簡単に実行できるようになります。</p> 
+<ul> 
+ <li>ER図からDDLを生成し実行する。</li> 
+ <li>データベースのテーブルに対応したEntityクラスを生成する。</li> 
+ <li>CSV形式のデータをデータベースに登録する。</li> 
+ <li>データベーススキーマのダンプファイルを取得する。</li> 
+ <li>リポジトリ上のダンプファイルをローカル環境へ反映する。</li> 
+</ul> 
+<blockquote> 
+ <ul> 
+  <li><p>ER図からDDLを生成するには、モデリングツールとして<a href="http://www.sint.co.jp/siob/er/">SI Object Browser ER</a>を使用する必要があります。 それ以外のツールを使用する場合、DDL生成機能は使用できません。</p></li> 
+  <li><p>gsp-dba-maven-pluginは開発フェーズで用いることを想定しています。本番環境での使用は推奨しません。</p></li> 
+ </ul> 
+</blockquote> 
+<h2> <a id="user-content-ゴールの概要" class="anchor" href="#%E3%82%B4%E3%83%BC%E3%83%AB%E3%81%AE%E6%A6%82%E8%A6%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ゴールの概要</h2> 
+<ul> 
+ <li> <a href="#generate-ddl">generate-ddl</a> データモデルを解析し、DDLを生成する。</li> 
+ <li> <a href="#execute-ddl">execute-ddl</a> DDLを実行する。</li> 
+ <li> <a href="#load-data">load-data</a> CSV形式で定義したデータをデータベースに登録する。</li> 
+ <li> <a href="#generate-entity">generate-entity</a> 指定したスキーマを解析し、Entityクラスを生成する。</li> 
+ <li> <a href="#export-schema">export-schema</a> データベーススキーマをダンプする。</li> 
+ <li> <a href="#import-schema">import-schema</a> リポジトリから取得したダンプファイルをインポートする。</li> 
+</ul> 
+<p>データベースによって、動作が異なる場合や制約事項があります。 詳細は、 <strong>データベースの対応状況</strong> を参照してください。</p> 
+<h2> <a id="user-content-使用方法" class="anchor" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用方法</h2> 
+<h3> <a id="user-content-設定" class="anchor" href="#%E8%A8%AD%E5%AE%9A" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>設定</h3> 
+<p>pom.xmlに以下の設定を追加することでプラグインが使用できるようになります。</p> 
+<div class="highlight highlight-text-xml">
+ <pre>&lt;<span class="pl-ent">pluginManagement</span>&gt;
+  &lt;<span class="pl-ent">plugins</span>&gt;
+    &lt;<span class="pl-ent">plugin</span>&gt;
+      &lt;<span class="pl-ent">groupId</span>&gt;jp.co.tis.gsp&lt;/<span class="pl-ent">groupId</span>&gt;
+      &lt;<span class="pl-ent">artifactId</span>&gt;gsp-dba-maven-plugin&lt;/<span class="pl-ent">artifactId</span>&gt;
+      &lt;<span class="pl-ent">version</span>&gt;
+        使用するgsp-dba-maven-pluginのバージョン
+      &lt;/<span class="pl-ent">version</span>&gt;
+      &lt;<span class="pl-ent">dependencies</span>&gt;
+        <span class="pl-c">&lt;!-- プロジェクトで使用するDB製品にあわせたJDBCドライバに修正してください。 --&gt;</span>
+        &lt;<span class="pl-ent">dependency</span>&gt;
+          &lt;<span class="pl-ent">groupId</span>&gt;com.oracle&lt;/<span class="pl-ent">groupId</span>&gt;
+          &lt;<span class="pl-ent">artifactId</span>&gt;ojdbc6&lt;/<span class="pl-ent">artifactId</span>&gt;
+          &lt;<span class="pl-ent">version</span>&gt;11.2.0.2.0&lt;/<span class="pl-ent">version</span>&gt;
+        &lt;/<span class="pl-ent">dependency</span>&gt;
+      &lt;/<span class="pl-ent">dependencies</span>&gt;
+    &lt;/<span class="pl-ent">plugin</span>&gt;
+  &lt;/<span class="pl-ent">plugins</span>&gt;
+&lt;/<span class="pl-ent">pluginManagement</span>&gt;</pre>
+</div> 
+<h3> <a id="user-content-ゴール共通のパラメータ" class="anchor" href="#%E3%82%B4%E3%83%BC%E3%83%AB%E5%85%B1%E9%80%9A%E3%81%AE%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ゴール共通のパラメータ</h3> 
+<p>以下のパラメータは全てのゴールで共通です。 対応する値を設定してください。</p> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">設定値</th> 
+   <th align="center">必須</th> 
+   <th align="left">説明</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left">driver</td> 
+   <td align="center">○</td> 
+   <td align="left">使用するJDBCドライバ。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">url</td> 
+   <td align="center">○</td> 
+   <td align="left">データベースのURL。 jdbc:subprotocol:subname 形式。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">adminUser</td> 
+   <td align="center">○</td> 
+   <td align="left">データベースのadminユーザ名。Oracleの場合はsysは指定出来ません。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">adminPassword</td> 
+   <td align="center">&times;</td> 
+   <td align="left">adminUserに設定したユーザのパスワード。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">user</td> 
+   <td align="center">○</td> 
+   <td align="left">データベースのユーザ名。 Oracleの場合はsysは指定出来ません。PostgreSQLの場合は常に小文字に変換して処理されます。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">password</td> 
+   <td align="center">&times;</td> 
+   <td align="left">userに設定したユーザのパスワード。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">schema</td> 
+   <td align="center">&times;</td> 
+   <td align="left">データベースのスキーマ名。指定しなかった場合はユーザ名と同じスキーマ名を使用すると解釈されます。ただしH2Databaseの場合のみ、PUBLICスキーマと解釈されます。 PostgreSQLの場合は常に小文字に、H2、DB2、Oracleの場合は常に大文字に変換して処理されます。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">dmpFile</td> 
+   <td align="center">&times;</td> 
+   <td align="left">ダンプファイル名。指定しなかった場合、[スキーマ名].dmpとなる。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">optionalDialects</td> 
+   <td align="center">&times;</td> 
+   <td align="left">使用するダイアレクトクラスのFQCN。</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<ul> 
+ <li>optionalDialectsの指定方法<br /> 使用するダイアレクトクラスを変更する場合、以下の形式でデータベースと対応するダイアレクトクラスを定義します。</li> 
+</ul> 
+<div class="highlight highlight-text-xml">
+ <pre>&lt;<span class="pl-ent">configuration</span>&gt;
+  &lt;<span class="pl-ent">optionalDialects</span>&gt;
+    &lt;<span class="pl-ent">oracle</span>&gt;jp.co.tis.gsp.tools.dba.dialect.CustomOracleDialect&lt;/<span class="pl-ent">oracle</span>&gt;
+  &lt;/<span class="pl-ent">optionalDialects</span>&gt;
+&lt;/<span class="pl-ent">configuration</span>&gt;</pre>
+</div> 
+<h3> <a id="user-content-generate-ddl" class="anchor" href="#generate-ddl" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>generate-ddl</h3> 
+<p>データモデルを解析し、DDLを生成します。 生成するDDLとファイル名の対応は以下の通りです。</p> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">DDLの種類</th> 
+   <th align="left">ファイル名</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left">テーブル定義</td> 
+   <td align="left">10_CREATE_&lt;テーブル名&gt;.sql</td> 
+  </tr> 
+  <tr> 
+   <td align="left">インデックス定義</td> 
+   <td align="left">20_CREATE_&lt;インデックスの物理名&gt;.sql</td> 
+  </tr> 
+  <tr> 
+   <td align="left">外部キー定義</td> 
+   <td align="left">30_CREATE_FK_&lt;テーブル名&gt;&lt;連番&gt;.sql</td> 
+  </tr> 
+  <tr> 
+   <td align="left">ビュー定義</td> 
+   <td align="left">40_CREATE_&lt;ビューの物理名&gt;.sql</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<p>また自動採番がDDLに反映されるルールは<a href=".\recipe\.spec-generateDdl.md.html">こちら</a>で確認してください。</p> 
+<pre><code>データモデル上のオブジェクトは「論理・物理モデル」として定義して下さい。
+「論理モデルのみ」または「物理モデルのみ」と定義した場合、対象のDDLは生成されません。
+また、文字列型や日付型を持つカラムのデフォルト値を設定する際は値をシングルクォーテーションで囲まないとexecute-ddl時にエラーが発生します。
+</code></pre> 
+<p>使用する場合、pom.xmlに以下を追加してください。</p> 
+<div class="highlight highlight-text-xml">
+ <pre>&lt;<span class="pl-ent">plugins</span>&gt;
+  &lt;<span class="pl-ent">plugin</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;jp.co.tis.gsp&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;gsp-dba-maven-plugin&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;
+      使用するgsp-dba-maven-pluginのバージョン
+    &lt;/<span class="pl-ent">version</span>&gt;
+    &lt;<span class="pl-ent">executions</span>&gt;
+      &lt;<span class="pl-ent">execution</span>&gt;
+        &lt;<span class="pl-ent">id</span>&gt;generate-ddl&lt;/<span class="pl-ent">id</span>&gt;
+        &lt;<span class="pl-ent">phase</span>&gt;generate-sources&lt;/<span class="pl-ent">phase</span>&gt;
+        &lt;<span class="pl-ent">goals</span>&gt;
+          &lt;<span class="pl-ent">goal</span>&gt;generate-ddl&lt;/<span class="pl-ent">goal</span>&gt;
+        &lt;/<span class="pl-ent">goals</span>&gt;
+        &lt;<span class="pl-ent">configuration</span>&gt;
+          <span class="pl-c">&lt;!-- 設定を追加 --&gt;</span>
+        &lt;/<span class="pl-ent">configuration</span>&gt;
+      &lt;/<span class="pl-ent">execution</span>&gt;
+    &lt;/<span class="pl-ent">executions</span>&gt;
+  &lt;/<span class="pl-ent">plugin</span>&gt;
+&lt;/<span class="pl-ent">plugins</span>&gt;</pre>
+</div> 
+<h4> <a id="user-content-使用可能なパラメータ" class="anchor" href="#%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用可能なパラメータ</h4> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">設定値</th> 
+   <th align="center">必須</th> 
+   <th align="left">説明</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left">erdFile</td> 
+   <td align="center">○</td> 
+   <td align="left">erdファイルのパス。ワークディレクトリからの相対パスで指定する。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">outputDirectory</td> 
+   <td align="center">&times;</td> 
+   <td align="left">DDLの出力ディレクトリ。デフォルトは、&quot;target/ddl&quot;。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">lengthSemantics</td> 
+   <td align="center">&times;</td> 
+   <td align="left">長さセマンティクス。デフォルトはバイト。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">ddlTemplateFileDir</td> 
+   <td align="center">&times;</td> 
+   <td align="left">プロジェクト固有のDDLテンプレートの配置ディレクトリをワークディレクトリからの相対パスで指定する。</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<p>テンプレートをカスタマイズする際は、<a href=".\recipe\.custom-DdlTemplate.md.html">generate-ddlで使用するテンプレートのカスタマイズ例</a>を参照してください。</p> 
+<h3> <a id="user-content-execute-ddl" class="anchor" href="#execute-ddl" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>execute-ddl</h3> 
+<ul> 
+ <li>DDLを実行します。</li> 
+ <li>複数ファイルにまたがる場合、ファイル名の昇順で実行します。</li> 
+ <li>パラメータuserに指定されたユーザが存在しない場合は指定ユーザを作成します。</li> 
+ <li>パラメータschemaで指定されたスキーマが存在しない場合は、指定スキーマを作成します。 
+  <ul> 
+   <li>MySQLの場合はスキーマの作成を行いません。事前にCREATE DATABASE文などで用意しておく必要があります。</li> 
+  </ul> </li> 
+ <li>パラメータschemaで指定されたスキーマが存在する場合は、指定スキーマ内にあるテーブル、ビュー、シーケンスを最初に全て削除します。</li> 
+</ul> 
+<p>使用する場合、pom.xmlに以下を追加してください。</p> 
+<div class="highlight highlight-text-xml">
+ <pre>&lt;<span class="pl-ent">plugins</span>&gt;
+  &lt;<span class="pl-ent">plugin</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;jp.co.tis.gsp&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;gsp-dba-maven-plugin&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;
+      使用するgsp-dba-maven-pluginのバージョン
+    &lt;/<span class="pl-ent">version</span>&gt;
+    &lt;<span class="pl-ent">executions</span>&gt;
+      &lt;<span class="pl-ent">execution</span>&gt;
+        &lt;<span class="pl-ent">id</span>&gt;execute-ddl&lt;/<span class="pl-ent">id</span>&gt;
+        &lt;<span class="pl-ent">phase</span>&gt;generate-sources&lt;/<span class="pl-ent">phase</span>&gt;
+        &lt;<span class="pl-ent">goals</span>&gt;
+          &lt;<span class="pl-ent">goal</span>&gt;execute-ddl&lt;/<span class="pl-ent">goal</span>&gt;
+        &lt;/<span class="pl-ent">goals</span>&gt;
+        &lt;<span class="pl-ent">configuration</span>&gt;
+          <span class="pl-c">&lt;!-- 設定を追加 --&gt;</span>
+        &lt;/<span class="pl-ent">configuration</span>&gt;
+      &lt;/<span class="pl-ent">execution</span>&gt;
+    &lt;/<span class="pl-ent">executions</span>&gt;
+  &lt;/<span class="pl-ent">plugin</span>&gt;
+&lt;/<span class="pl-ent">plugins</span>&gt;</pre>
+</div> 
+<h4> <a id="user-content-使用可能なパラメータ-1" class="anchor" href="#%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用可能なパラメータ</h4> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">設定値</th> 
+   <th align="center">必須</th> 
+   <th align="left">説明</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left">ddlDirectory</td> 
+   <td align="center">&times;</td> 
+   <td align="left">DDLの配置ディレクトリ。デフォルトは、&quot;target/ddl&quot;。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">extraDdlDirectory</td> 
+   <td align="center">&times;</td> 
+   <td align="left">追加で実行したいSQLファイルの配置ディレクトリ。</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<h3> <a id="user-content-load-data" class="anchor" href="#load-data" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>load-data</h3> 
+<p>CSV形式で定義したデータを、データベースの指定したスキーマに登録します。</p> 
+<p>使用する場合、pom.xmlに以下を追加してください。</p> 
+<div class="highlight highlight-text-xml">
+ <pre>&lt;<span class="pl-ent">plugins</span>&gt;
+  &lt;<span class="pl-ent">plugin</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;jp.co.tis.gsp&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;gsp-dba-maven-plugin&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;
+      使用するgsp-dba-maven-pluginのバージョン
+    &lt;/<span class="pl-ent">version</span>&gt;
+    &lt;<span class="pl-ent">executions</span>&gt;
+      &lt;<span class="pl-ent">execution</span>&gt;
+        &lt;<span class="pl-ent">id</span>&gt;load-data&lt;/<span class="pl-ent">id</span>&gt;
+        &lt;<span class="pl-ent">phase</span>&gt;pre-integration-test&lt;/<span class="pl-ent">phase</span>&gt;
+        &lt;<span class="pl-ent">goals</span>&gt;
+          &lt;<span class="pl-ent">goal</span>&gt;load-data&lt;/<span class="pl-ent">goal</span>&gt;
+        &lt;/<span class="pl-ent">goals</span>&gt;
+        &lt;<span class="pl-ent">configuration</span>&gt;
+          <span class="pl-c">&lt;!-- 設定を追加 --&gt;</span>
+        &lt;/<span class="pl-ent">configuration</span>&gt;
+      &lt;/<span class="pl-ent">execution</span>&gt;
+    &lt;/<span class="pl-ent">executions</span>&gt;
+  &lt;/<span class="pl-ent">plugin</span>&gt;
+&lt;/<span class="pl-ent">plugins</span>&gt;</pre>
+</div> 
+<h4> <a id="user-content-使用可能なパラメータ-2" class="anchor" href="#%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用可能なパラメータ</h4> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">設定値</th> 
+   <th align="center">必須</th> 
+   <th align="left">説明</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left">dataDirectory</td> 
+   <td align="center">○</td> 
+   <td align="left">データファイルの配置ディレクトリ。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">specifiedEncodingFiles</td> 
+   <td align="center">&times;</td> 
+   <td align="left">データファイルの文字コードを指定する場合に設定。デフォルトは&quot;Windows-31J&quot;。</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<ul> 
+ <li>specifiedEncodingFilesの指定方法</li> 
+</ul> 
+<p>データファイルの文字コードを指定する場合、以下の形式でファイル名と対応する文字コードを定義します。</p> 
+<div class="highlight highlight-text-xml">
+ <pre>&lt;<span class="pl-ent">configuration</span>&gt;
+  &lt;<span class="pl-ent">specifiedEncodingFiles</span>&gt;
+    &lt;<span class="pl-ent">aa</span>.csv&gt;UTF-8&lt;/<span class="pl-ent">aa</span>.csv&gt;
+    &lt;<span class="pl-ent">bb</span>.csv&gt;UTF-8&lt;/<span class="pl-ent">bb</span>.csv&gt;
+  &lt;/<span class="pl-ent">specifiedEncodingFiles</span>&gt;
+&lt;/<span class="pl-ent">configuration</span>&gt;</pre>
+</div> 
+<h4> <a id="user-content-データの形式" class="anchor" href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%BD%A2%E5%BC%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>データの形式</h4> 
+<p>データおよびデータファイルは以下の形式で作成してください。</p> 
+<ul> 
+ <li>ファイル名は、 <em>テーブルの物理名</em>.csv。</li> 
+ <li>先頭行は、カラムの物理名(:カラムの型名)。DBによっては型名を指定しなくても自動で推定し、設定される。</li> 
+ <li>二行目以降にテストデータを記載。</li> 
+ <li>全角空白、半角空白のみの項目はnullとして扱われる。変更する際は<a href=".\recipe\.custom-Dialect.md.html">Dialectクラスのカスタマイズ例</a>を参照すること。</li> 
+</ul> 
+<p>データの例を記載します。</p> 
+<pre><code>ITEM,VARCHAR_ITEM:VARCHAR,DATE_ITEM:DATE,TIMESTAMP_ITEM:TIMESTAMP,ARRAY_ITEM:ARRAY
+item,item0000000000000000,2014-12-13,2014-12-13 4:15:16,&quot;項目1,項目2,項目3&quot;
+</code></pre> 
+<h4> <a id="user-content-登録可能なデータ型" class="anchor" href="#%E7%99%BB%E9%8C%B2%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>登録可能なデータ型</h4> 
+<p>登録可能なデータ型はデータベースごとに異なります。 詳細は、 <a href=".\doc\.db-status.md.html#load-dataの対応状況">load-dataの対応状況</a> を参照してください。</p> 
+<h3> <a id="user-content-generate-entity" class="anchor" href="#generate-entity" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>generate-entity</h3> 
+<p>データベースのメタデータから、テーブルに対応するエンティティを生成します。自動生成時に付与される各種アノテーションに関しては、<a href="recipe\.spec-generatedEntity.md.html">エンティティで使用されるアノテーション</a>をご確認ください。 生成処理はカスタマイズしたS2JDBC-Genを使用しています。</p> 
+<p>使用する場合、pom.xmlに以下を追加してください。</p> 
+<div class="highlight highlight-text-xml">
+ <pre>&lt;<span class="pl-ent">plugins</span>&gt;
+  &lt;<span class="pl-ent">plugin</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;jp.co.tis.gsp&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;gsp-dba-maven-plugin&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;
+      使用するgsp-dba-maven-pluginのバージョン
+    &lt;/<span class="pl-ent">version</span>&gt;
+    &lt;<span class="pl-ent">executions</span>&gt;
+      &lt;<span class="pl-ent">execution</span>&gt;
+        &lt;<span class="pl-ent">id</span>&gt;generate-entity&lt;/<span class="pl-ent">id</span>&gt;
+        &lt;<span class="pl-ent">phase</span>&gt;generate-sources&lt;/<span class="pl-ent">phase</span>&gt;
+        &lt;<span class="pl-ent">goals</span>&gt;
+          &lt;<span class="pl-ent">goal</span>&gt;generate-entity&lt;/<span class="pl-ent">goal</span>&gt;
+        &lt;/<span class="pl-ent">goals</span>&gt;
+        &lt;<span class="pl-ent">configuration</span>&gt;
+          <span class="pl-c">&lt;!-- 設定を追加 --&gt;</span>
+        &lt;/<span class="pl-ent">configuration</span>&gt;
+      &lt;/<span class="pl-ent">execution</span>&gt;
+    &lt;/<span class="pl-ent">executions</span>&gt;
+  &lt;/<span class="pl-ent">plugin</span>&gt;
+&lt;/<span class="pl-ent">plugins</span>&gt;</pre>
+</div> 
+<h4> <a id="user-content-使用可能なパラメータ-3" class="anchor" href="#%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用可能なパラメータ</h4> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">設定値</th> 
+   <th align="center">必須</th> 
+   <th align="left">説明</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left">ignoreTableNamePattern</td> 
+   <td align="center">&times;</td> 
+   <td align="left">自動生成対象外とするテーブル名。正規表現で指定する。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">entityPackageName</td> 
+   <td align="center">&times;</td> 
+   <td align="left">エンティティのパッケージ名。デフォルトは、”entity”。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">genDialectClassName</td> 
+   <td align="center">&times;</td> 
+   <td align="left">S2JDBC-Genのダイアレクトインタフェースの実装クラス名。<br />カスタマイズする際は<a href=".\recipe\.custom-genDialect.md.html">GenDialectクラスのカスタマイズ例</a>を参照してください。<br /> </td> 
+  </tr> 
+  <tr> 
+   <td align="left">dialectClassName</td> 
+   <td align="center">&times;</td> 
+   <td align="left">S2JDBCのダイアレクトインタフェースの実装クラス名。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">rootPackage</td> 
+   <td align="center">○</td> 
+   <td align="left">ルートパッケージ名。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">useAccessor</td> 
+   <td align="center">&times;</td> 
+   <td align="left">アクセッサを使用するかどうか。デフォルトは、”false”。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">entityTemplate</td> 
+   <td align="center">&times;</td> 
+   <td align="left">entity の自動生成テンプレート。デフォルトは、&quot;java/gsp_entity.ftl&quot;</td> 
+  </tr> 
+  <tr> 
+   <td align="left">javaFileDestDir</td> 
+   <td align="center">&times;</td> 
+   <td align="left">生成されたentityのjavaファイルを配置するディレクトリ</td> 
+  </tr> 
+  <tr> 
+   <td align="left">templateFilePrimaryDir</td> 
+   <td align="center">&times;</td> 
+   <td align="left">entityTemplateまでのパス。デフォルトは、&quot;src/main/resources/org/seasar/extension/jdbc/gen/internal/generator/tempaltes&quot;。<br />使用例:ファイルまでのパスが&quot;src/main/resource/template/gsp_template.ftlの場合、それぞれ <br /> entityTemplate: gsp_template.ftl <br /> templateFilePrimaryDir:src/main/resource/template <br /> と設定する。</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<p>テンプレートをカスタマイズする際は、<a href=".\recipe\.custom-EntityTemplate.md.html">generate-entityで使用するテンプレートのカスタマイズ例</a>を参照してください。</p> 
+<h3> <a id="user-content-export-schema" class="anchor" href="#export-schema" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>export-schema</h3> 
+<p>指定したスキーマのダンプファイルをエクスポートします。</p> 
+<pre><code>maven-install-pluginやmaven-deploy-pluginと組み合わせることで、
+ローカル環境へのインストールやリモートリポジトリへのデプロイが可能になります。
+</code></pre> 
+<p>ダンプファイルのファイル名は以下の形式です。</p> 
+<pre><code>プロジェクトのアーティファクトId + &quot;-testdata-&quot; + プロジェクトのバージョン + &quot;.jar&quot;
+</code></pre> 
+<p>使用する場合、pom.xmlに以下を追加してください。</p> 
+<div class="highlight highlight-text-xml">
+ <pre>&lt;<span class="pl-ent">plugins</span>&gt;
+  &lt;<span class="pl-ent">plugin</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;jp.co.tis.gsp&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;gsp-dba-maven-plugin&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;
+      使用するgsp-dba-maven-pluginのバージョン
+    &lt;/<span class="pl-ent">version</span>&gt;
+    &lt;<span class="pl-ent">executions</span>&gt;
+      &lt;<span class="pl-ent">execution</span>&gt;
+        &lt;<span class="pl-ent">id</span>&gt;export-schema&lt;/<span class="pl-ent">id</span>&gt;
+        &lt;<span class="pl-ent">phase</span>&gt;install&lt;/<span class="pl-ent">phase</span>&gt;
+        &lt;<span class="pl-ent">goals</span>&gt;
+          &lt;<span class="pl-ent">goal</span>&gt;export-schema&lt;/<span class="pl-ent">goal</span>&gt;
+        &lt;/<span class="pl-ent">goals</span>&gt;
+        &lt;<span class="pl-ent">configuration</span>&gt;
+          <span class="pl-c">&lt;!-- 設定を追加 --&gt;</span>
+        &lt;/<span class="pl-ent">configuration</span>&gt;
+      &lt;/<span class="pl-ent">execution</span>&gt;
+    &lt;/<span class="pl-ent">executions</span>&gt;
+  &lt;/<span class="pl-ent">plugin</span>&gt;
+&lt;/<span class="pl-ent">plugins</span>&gt;</pre>
+</div> 
+<h4> <a id="user-content-使用可能なパラメータ-4" class="anchor" href="#%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用可能なパラメータ</h4> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">設定値</th> 
+   <th align="center">必須</th> 
+   <th align="left">説明</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left">outputDirectory</td> 
+   <td align="center">&times;</td> 
+   <td align="left">データベーススキーマをエクスポートするディレクトリのパス。デフォルトは”target/dump”。</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<p>export-schemaはDB2とSQLServerには対応しておりません。<br /> これらのDBを使用する際は、上記の<code>&lt;execution&gt;~&lt;/execution&gt;</code>をコメントアウト、もしくは削除してください。</p> 
+<h3> <a id="user-content-import-schema" class="anchor" href="#import-schema" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>import-schema</h3> 
+<p>リポジトリからダンプファイルを取得し、ローカルのデータベースにインポートする。</p> 
+<p>使用する場合、pom.xmlに以下を追加してください。</p> 
+<div class="highlight highlight-text-xml">
+ <pre>&lt;<span class="pl-ent">plugins</span>&gt;
+  &lt;<span class="pl-ent">plugin</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;jp.co.tis.gsp&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;gsp-dba-maven-plugin&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;
+      使用するgsp-dba-maven-pluginのバージョン
+    &lt;/<span class="pl-ent">version</span>&gt;
+    &lt;<span class="pl-ent">configuration</span>&gt;
+    <span class="pl-c">&lt;!-- 設定を追加 --&gt;</span>
+    &lt;/<span class="pl-ent">configuration</span>&gt;
+  &lt;/<span class="pl-ent">plugin</span>&gt;
+&lt;/<span class="pl-ent">plugins</span>&gt;</pre>
+</div> 
+<h4> <a id="user-content-使用可能なパラメータ-5" class="anchor" href="#%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF-5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用可能なパラメータ</h4> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">設定値</th> 
+   <th align="center">必須</th> 
+   <th align="left">説明</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left">inputDirectory</td> 
+   <td align="center">&times;</td> 
+   <td align="left">ダンプファイルの配置ディレクトリ。デフォルトは、”target/dump”。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">groupId</td> 
+   <td align="center">&times;</td> 
+   <td align="left">ダンプファイルのグループID。デフォルトは、プロジェクトのグループID。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">artifactId</td> 
+   <td align="center">&times;</td> 
+   <td align="left">ダンプファイルのアーティファクトID。デフォルトは、プロジェクトのアーティファクトID。</td> 
+  </tr> 
+  <tr> 
+   <td align="left">version</td> 
+   <td align="center">&times;</td> 
+   <td align="left">ダンプファイルのバージョン。デフォルトは、プロジェクトのバージョン。</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<p>import-schemaはDB2とSQLServerには対応しておりません。</p> 
+<h3> <a id="user-content-データベースごとの対応状況" class="anchor" href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%81%94%E3%81%A8%E3%81%AE%E5%AF%BE%E5%BF%9C%E7%8A%B6%E6%B3%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>データベースごとの対応状況</h3> 
+<ul> 
+ <li> <a href=".\doc\.db-status.md.html">こちら</a>を参照して下さい。</li> 
+</ul> 
+<h3> <a id="user-content-制約事項" class="anchor" href="#%E5%88%B6%E7%B4%84%E4%BA%8B%E9%A0%85" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>制約事項</h3> 
+<p>各ゴールは、以下の制約事項が存在します。</p> 
+<h4> <a id="user-content-execute-ddl-1" class="anchor" href="#execute-ddl-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>execute-ddl</h4> 
+<ul> 
+ <li>Oracle<br /> ユーザー名とスキーマ名が一致しない時、新たにスキーマが作成されます。<br /> ただしスキーマを本プラグインで新規作成した時、同時に作成されるユーザのログインパスワードはスキーマ名と同じになります。</li> 
+ <li>DB2<br /> ユーザ名とスキーマ名は同一のものしか指定できません。</li> 
+ <li>H2<br /> ユーザ名とスキーマ名に <strong>同一の値を設定すると</strong> 失敗します。</li> 
+</ul> 
+<h4> <a id="user-content-generate-entity-1" class="anchor" href="#generate-entity-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>generate-entity</h4> 
+<ul> 
+ <li>MS SQL Server<br /> 拡張エンティティを用いて設定したテーブル、カラムに対するコメントはjavaファイルに反映されません。</li> 
+ <li>H2<br /> ユーザ名とスキーマ名に <strong>同一の値を設定すると</strong> 失敗します。<br /> erdファイルにViewの定義が含まれていると失敗します。</li> 
+</ul> 
+<h4> <a id="user-content-export-schema-1" class="anchor" href="#export-schema-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>export-schema</h4> 
+<ul> 
+ <li>全データベース共通<br /> gsp-dba-maven-pluginを起動するマシンと、同一マシンでデータベースが起動していない場合の動作は保障していません。</li> 
+ <li>MS SQL Server<br /> 使用できません。</li> 
+ <li>DB2<br /> 使用できません。</li> 
+ <li>H2<br /> ユーザ名とスキーマ名に <strong>同一の値を設定すると</strong> 失敗します。</li> 
+</ul> 
+<h4> <a id="user-content-import-schema-1" class="anchor" href="#import-schema-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>import-schema</h4> 
+<ul> 
+ <li>全データベース共通<br /> gsp-dba-maven-pluginを起動するマシンと、同一マシンでデータベースが起動していない場合の動作は保障していません。</li> 
+ <li>MS SQL Server<br /> 使用できません。</li> 
+ <li>DB2<br /> 使用できません。</li> 
+ <li>H2<br /> ユーザ名とスキーマ名に <strong>同一の値を設定すると</strong> 失敗します。</li> 
+</ul> 
+<h2> <a id="user-content-license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2> 
+<p>gsp-dba-maven-plugin はApache License 2.0 の元に配布されます。</p> 
+<ul> 
+ <li><a href="http://www.apache.org/licenses/LICENSE-2.0.txt">http://www.apache.org/licenses/LICENSE-2.0.txt</a></li> 
+</ul>
+</body>
+</html>
