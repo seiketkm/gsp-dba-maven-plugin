@@ -1,11 +1,13 @@
 package jp.co.tis.gsp.test.util.dozer;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import org.dozer.CustomConverter;
 
+/**
+ * 指定されたファイル・フォルダパスから{@code java.io.File}オブジェクトを生成します.
+ * 
+ */
 public class ClassPathFileConverter implements CustomConverter {
 
 	public Object convert(Object destination, Object filePath, Class destClass, Class sourceClass) {
@@ -18,10 +20,10 @@ public class ClassPathFileConverter implements CustomConverter {
 
 		File fileObj = null;
 		try {
-			URI path = Thread.currentThread().getContextClassLoader().getResource(filePath.toString()).toURI();
+			String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "/"
+					+ filePath.toString();
 			fileObj = new File(path);
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 		}
 
 		return fileObj;

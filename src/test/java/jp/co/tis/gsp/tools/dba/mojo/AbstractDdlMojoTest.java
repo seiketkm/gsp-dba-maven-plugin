@@ -16,6 +16,7 @@ import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
 import jp.co.tis.gsp.test.util.TestCasePattern;
 
 @RunWith(Theories.class)
@@ -31,12 +32,38 @@ public abstract class AbstractDdlMojoTest<E> {
 			TestCasePattern tp = d.getAnnotation(TestCasePattern.class);
 			if (tp != null) {
 				caseList = new ArrayList<AbstractDdlMojoTest<E>.PatternFixture>();
-				for (TestDB db : tp.testDb()) {
+				for (TestDB db : getDbCase(tp)) {
 					caseList.add(new PatternFixture(d.getTestClass(), tp.testCase(), db));
 				}
 			}
 
 		};
+
+		// プロパティファイルとTestCasePattern#testDb要素から実行するデータベースパターンを取得する
+		private TestDB[] getDbCase(TestCasePattern tp) {
+
+			// プロパティファイルにtestDBが設定されている場合。
+			// 設定されたtestDBがアノテーションに含まれている場合はそのtestDB要素だけの配列を返す
+			try {
+				String propPath = Thread.currentThread().getContextClassLoader()
+						.getResource("jp/co/tis/gsp/tools/dba/mojo/mojoTest.properties").getPath();
+				Properties prop = new Properties();
+				prop.load(new FileInputStream(new File(propPath)));
+
+				String testDb = prop.getProperty("testDB");
+				if (testDb != null && Arrays.asList(tp.testDb()).contains(TestDB.valueOf(testDb))) {
+					return new TestDB[] { TestDB.valueOf(testDb) };
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+			// 上記以外は、アノテーション設定値をそのまま返す
+			return tp.testDb();
+
+		}
 
 		protected void finished(Description description) {
 			caseList = null;
@@ -45,13 +72,13 @@ public abstract class AbstractDdlMojoTest<E> {
 
 	List<PatternFixture> caseList;
 
-	protected E bindParameter(PatternFixture pf) {
+	protected E setUpMojo(PatternFixture pf) {
 		Object rtn = null;
 		try {
 			String testClassName = pf.testClass.getSimpleName();
-			String propPath = this.getClass()
-					.getResource(testClassName + "/" + pf.caseName + "/" + pf.testDb + "/mojo_pram.properties")
-					.getPath();
+
+			// DB共通Mojoパラメータを設定
+			String propPath = this.getClass().getResource(pf.testDb + ".properties").getPath();
 			Properties prop = new Properties();
 			prop.load(new FileInputStream(new File(propPath)));
 			DozerBeanMapper mapper = new DozerBeanMapper();
@@ -62,6 +89,17 @@ public abstract class AbstractDdlMojoTest<E> {
 			myMappingFiles.add(mapperFile);
 			mapper.setMappingFiles(myMappingFiles);
 			rtn = mapper.map(prop, Class.forName(mojoType.getTypeName()));
+
+			// ケース固有のMojoパラメータを設定
+			propPath = this.getClass()
+					.getResource(testClassName + "/" + pf.caseName + "/" + pf.testDb + "/mojo_pram.properties")
+					.getPath();
+			prop = new Properties();
+			prop.load(new FileInputStream(new File(propPath)));
+
+			// 共通設定に上書きマージ
+			mapper.map(prop, rtn);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

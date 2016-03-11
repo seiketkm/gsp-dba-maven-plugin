@@ -28,7 +28,7 @@ public class ExecuteDdlMojoTest extends AbstractDdlMojoTest<ExecuteDdlMojo> {
 		for (PatternFixture pf : caseList) {
 
 			// ケース、データベースに応じてmojoにパラメータをバインドしてmojoを生成
-			mojo = bindParameter(pf);
+			mojo = setUpMojo(pf);
 
 			// mojo実行
 			mojo.execute();
