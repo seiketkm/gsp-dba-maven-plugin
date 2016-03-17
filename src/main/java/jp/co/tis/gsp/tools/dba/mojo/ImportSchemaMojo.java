@@ -51,13 +51,13 @@ public class ImportSchemaMojo extends AbstractDbaMojo {
 	protected File inputDirectory;
 
     @Component
-    private MavenProject project;
+    protected MavenProject project;
 
     @Component
     protected RepositorySystem repositorySystem;
 
     @Parameter(property="localRepository", required = true, readonly = true)
-    private ArtifactRepository localRepository;
+    protected ArtifactRepository localRepository;
 
     @Parameter(defaultValue = "${project.groupId}")
     protected String groupId;

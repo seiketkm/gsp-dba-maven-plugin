@@ -46,7 +46,7 @@ public class ExportSchemaMojo extends AbstractDbaMojo {
     protected JarArchiver jarArchiver;
 
     @Component
-    private MavenProject project;
+    protected MavenProject project;
 
 	@Override
 	protected void executeMojoSpec() throws MojoExecutionException, MojoFailureException {

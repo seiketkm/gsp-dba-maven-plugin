@@ -8,8 +8,24 @@ public abstract class Entry implements Comparable<Entry> {
 
 	protected String path;
 
+	protected static final String SEP = System.getProperty("file.separator");
+
+	protected final String IS_ROOT = "";
+
 	public String getPath() {
 		return path;
+	}
+
+	public String getFullPath() {
+		if (isRoot()) {
+			return this.root;
+		} else {
+			return root + SEP + path;
+		}
+	}
+
+	public boolean isRoot() {
+		return this.path.equals(IS_ROOT);
 	}
 
 	public Entry add(Entry entry) throws Exception {
@@ -26,13 +42,7 @@ public abstract class Entry implements Comparable<Entry> {
 	public boolean equals(Object obj) {
 		Entry entry = (Entry) obj;
 
-		String rr = Pattern.quote(root);
-		String ss = Pattern.quote(entry.root);
-
-		String mypath = this.getPath().replaceFirst(rr, "");
-		String comparePath = entry.path.replaceFirst(ss, "");
-
-		if (!mypath.equals(comparePath)) {
+		if (!this.path.equals(entry.path)) {
 			return false;
 		}
 

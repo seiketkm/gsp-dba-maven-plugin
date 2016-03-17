@@ -1,0 +1,26 @@
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<mapping>
+		<class-a>java.util.Properties</class-a>
+		<class-b map-null="false" map-empty-string="false">jp.co.tis.gsp.tools.dba.mojo.GenerateDdlMojo
+		</class-b>
+		<field>
+			<a key="erdFile">this</a>
+			<b is-accessible="true">erdFile</b>
+		</field>
+		<field>
+			<a key="outputDirectory">this</a>
+			<b is-accessible="true">outputDirectory</b>
+		</field>
+		<field>
+			<a key="lengthSemantics">this</a>
+			<b is-accessible="true">lengthSemantics</b>
+		</field>
+		<field>
+			<a key="ddlTemplateFileDir">this</a>
+			<b is-accessible="true">ddlTemplateFileDir</b>
+		</field>
+	</mapping>
+
+</mappings>

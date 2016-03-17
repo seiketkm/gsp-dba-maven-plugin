@@ -1,0 +1,50 @@
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<mapping>
+		<class-a>java.util.Properties</class-a>
+		<class-b map-null="false" map-empty-string="false">jp.co.tis.gsp.tools.dba.mojo.GenerateEntity
+		</class-b>
+		<field>
+			<a key="diconDir">this</a>
+			<b is-accessible="true">diconDir</b>
+		</field>
+		<field>
+			<a key="ignoreTableNamePattern">this</a>
+			<b is-accessible="true">ignoreTableNamePattern</b>
+		</field>
+		<field>
+			<a key="entityPackageName">this</a>
+			<b is-accessible="true">entityPackageName</b>
+		</field>
+		<field>
+			<a key="genDialectClassName">this</a>
+			<b is-accessible="true">genDialectClassName</b>
+		</field>
+		<field>
+			<a key="dialectClassName">this</a>
+			<b is-accessible="true">dialectClassName</b>
+		</field>
+		<field>
+			<a key="rootPackage">this</a>
+			<b is-accessible="true">rootPackage</b>
+		</field>
+		<field>
+			<a key="useAccessor">this</a>
+			<b is-accessible="true">useAccessor</b>
+		</field>
+		<field>
+			<a key="javaFileDestDir">this</a>
+			<b is-accessible="true">javaFileDestDir</b>
+		</field>
+		<field>
+			<a key="entityTemplate">this</a>
+			<b is-accessible="true">entityTemplate</b>
+		</field>
+		<field>
+			<a key="templateFilePrimaryDir">this</a>
+			<b is-accessible="true">templateFilePrimaryDir</b>
+		</field>
+	</mapping>
+
+</mappings>

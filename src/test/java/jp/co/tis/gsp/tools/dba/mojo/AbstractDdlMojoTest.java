@@ -5,9 +5,14 @@ import java.io.FileInputStream;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.installer.ArtifactInstaller;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.codehaus.plexus.PlexusTestCase;
 import org.dozer.DozerBeanMapper;
 import org.junit.Rule;
 import org.junit.experimental.theories.Theories;
@@ -15,25 +20,33 @@ import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.seasar.framework.util.StringUtil;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
+import jp.co.tis.gsp.test.util.MojoTestFixture;
 import jp.co.tis.gsp.test.util.TestCasePattern;
 
 @RunWith(Theories.class)
-public abstract class AbstractDdlMojoTest<E> {
+public abstract class AbstractDdlMojoTest<E> extends PlexusTestCase {
 
 	protected Type mojoType = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	protected E mojo;
 
+	/** 各Mojoテストメソッド実行時に参照される`{@code MojoTestFixture}`のリスト */
+	List<MojoTestFixture> mojoTestFixtureList;
+
+	/**
+	 * テストメソッド実行時に、`{@code TestCasePattern}`アノテーションから`
+	 * {@code mojoTestFixtureList}`を生成.
+	 */
 	@Rule
 	public TestRule caseSetUpper = new TestWatcher() {
 		protected void starting(Description d) {
 
 			TestCasePattern tp = d.getAnnotation(TestCasePattern.class);
 			if (tp != null) {
-				caseList = new ArrayList<AbstractDdlMojoTest<E>.PatternFixture>();
+				mojoTestFixtureList = new ArrayList<MojoTestFixture>();
 				for (TestDB db : getDbCase(tp)) {
-					caseList.add(new PatternFixture(d.getTestClass(), tp.testCase(), db));
+					mojoTestFixtureList.add(new MojoTestFixture(d.getTestClass(), tp.testCase(), db));
 				}
 			}
 
@@ -51,7 +64,7 @@ public abstract class AbstractDdlMojoTest<E> {
 				prop.load(new FileInputStream(new File(propPath)));
 
 				String testDb = prop.getProperty("testDB");
-				if (testDb != null && Arrays.asList(tp.testDb()).contains(TestDB.valueOf(testDb))) {
+				if (!StringUtil.isBlank(testDb) && Arrays.asList(tp.testDb()).contains(TestDB.valueOf(testDb))) {
 					return new TestDB[] { TestDB.valueOf(testDb) };
 				}
 
@@ -66,38 +79,46 @@ public abstract class AbstractDdlMojoTest<E> {
 		}
 
 		protected void finished(Description description) {
-			caseList = null;
+			mojoTestFixtureList = null;
 		}
 	};
 
-	List<PatternFixture> caseList;
-
-	protected E setUpMojo(PatternFixture pf) {
+	/**
+	 * `{@code PatternFixture}`よりテスト対象となるMojoクラスを生成.
+	 * 
+	 * @param mf
+	 *            - Mojo生成パラメータ
+	 * @return テスト対象のMojo
+	 */
+	protected E setUpMojo(MojoTestFixture mf, String caseMojoParamPath) throws Exception {
 		Object rtn = null;
 		try {
-			String testClassName = pf.testClass.getSimpleName();
+			Class<?> mojoClass = Class.forName(mojoType.getTypeName());
+			String mojoSimpleName = mojoClass.getSimpleName();
 
-			// DB共通Mojoパラメータを設定
-			String propPath = this.getClass().getResource(pf.testDb + ".properties").getPath();
+			// 基本Mojoパラメータを設定
+			String propPath = this.getClass().getResource(mf.testDb + ".properties").getPath();
 			Properties prop = new Properties();
 			prop.load(new FileInputStream(new File(propPath)));
 			DozerBeanMapper mapper = new DozerBeanMapper();
 			List<String> myMappingFiles = new ArrayList<String>();
 
-			String mapperFile = this.getClass().getResource(testClassName + "/paramMapper.xml").toURI().toURL()
+			String abstractDbaMojoMapper = this.getClass().getResource("AbstractDbaMojoMapper.xml").toURI().toURL()
 					.toString();
-			myMappingFiles.add(mapperFile);
+			String mojoMapper = this.getClass().getResource(mojoSimpleName + "/MojoMapper.xml").toURI().toURL()
+					.toString();
+
+			myMappingFiles.add(abstractDbaMojoMapper);
+			myMappingFiles.add(mojoMapper);
+
 			mapper.setMappingFiles(myMappingFiles);
-			rtn = mapper.map(prop, Class.forName(mojoType.getTypeName()));
+			rtn = mapper.map(prop, mojoClass);
 
-			// ケース固有のMojoパラメータを設定
-			propPath = this.getClass()
-					.getResource(testClassName + "/" + pf.caseName + "/" + pf.testDb + "/mojo_pram.properties")
-					.getPath();
+			// ケース独自のMojoパラメータを設定。後でこいつで基本Mojoパラメータを上書きする。
 			prop = new Properties();
-			prop.load(new FileInputStream(new File(propPath)));
+			prop.load(new FileInputStream(new File(caseMojoParamPath)));
 
-			// 共通設定に上書きマージ
+			// 基本Mojoパラメータに上書きマージ
 			mapper.map(prop, rtn);
 
 		} catch (Exception e) {
@@ -107,26 +128,59 @@ public abstract class AbstractDdlMojoTest<E> {
 		return (E) rtn;
 	}
 
+	/**
+	 * テストクラス/テストケース/テストＤＢ までの絶対パスを取得する。
+	 * 
+	 * @param mf
+	 * @return - パス
+	 * @throws Exception
+	 */
+	protected String getTestCaseDBPath(MojoTestFixture mf) throws Exception {
+		Class<?> mojoClass = Class.forName(mojoType.getTypeName());
+		String mojoSimpleName = mojoClass.getSimpleName();
+		return this.getClass().getResource(mojoSimpleName + "/" + mf.caseName + "/" + mf.testDb).getPath().toString();
+	}
+
+	/**
+	 * テストデータベースの列挙子
+	 */
 	public enum TestDB {
 		oracle, db2, postgresql, mysql, sqlserver, h2;
 	}
 
-	protected class PatternFixture {
-		public PatternFixture(Class<?> testClass, String caseName, TestDB testDb) {
-			this.testClass = testClass;
-			this.caseName = caseName;
-			this.testDb = testDb;
-		}
+	/**
+	 * 期待値ファイルが格納されているルートフォルダ.
+	 * 
+	 * Mojo実行後に生成されるファイルと突合する際に利用する.
+	 * 
+	 * @param mf
+	 *            - Mojo生成パラメータ
+	 * @return 期待値ファイルが格納されているルートフォルダ
+	 */
+	protected String getExpectedPath(MojoTestFixture mf) throws Exception {
 
-		public Class<?> testClass;
-		public String caseName;
-		public TestDB testDb;
-	}
+		Class<?> mojoClass = Class.forName(mojoType.getTypeName());
+		String mojoSimpleName = mojoClass.getSimpleName();
 
-	protected String getExpectedPath(PatternFixture pf) {
-		return new File(this.getClass()
-				.getResource(pf.testClass.getSimpleName() + "/" + pf.caseName + "/" + pf.testDb + "/expected")
+		return new File(this.getClass().getResource(mojoSimpleName + "/" + mf.caseName + "/" + mf.testDb + "/expected")
 				.getPath()).getAbsolutePath();
 
 	}
+
+	/**
+	 * 指定ローカルリポジトリにMavenのArtifactをインストールします。
+	 * 
+	 * @param artifact
+	 *            - アーティファクト
+	 * @param localRep
+	 *            - ローカルリポジトリ
+	 * @throws Exception
+	 *             - 例外
+	 */
+	protected void installArtifactToTestRepo(Artifact artifact, ArtifactRepository localRep) throws Exception {
+
+		ArtifactInstaller ai = this.lookup(ArtifactInstaller.class);
+		ai.install(artifact.getFile(), artifact, localRep);
+	}
+
 }

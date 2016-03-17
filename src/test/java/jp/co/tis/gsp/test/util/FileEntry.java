@@ -14,8 +14,8 @@ public class FileEntry extends Entry {
 
 	@Override
 	public void debugPrint() {
-		System.out.println(this);
-		System.out.println(root);
+		System.out.println(this.getFullPath());
+//		System.out.println(root);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class FileEntry extends Entry {
 
 		// ファイルコンテンツ比較
 		try {
-			return FileUtils.contentEquals(new File(this.path), new File(((Entry) obj).getPath()));
+			return FileUtils.contentEquals(new File(this.getFullPath()), new File(((Entry) obj).getFullPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

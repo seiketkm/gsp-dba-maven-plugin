@@ -1,0 +1,30 @@
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<mapping>
+		<class-a>java.util.Properties</class-a>
+		<class-b map-null="false" map-empty-string="false">jp.co.tis.gsp.tools.dba.mojo.ImportSchemaMojo
+		</class-b>
+		<field>
+			<a key="inputDirectory">this</a>
+			<b is-accessible="true">inputDirectory</b>
+		</field>
+		<field>
+			<a key="localRepository">this</a>
+			<b is-accessible="true">localRepository</b>
+		</field>
+		<field>
+			<a key="groupId">this</a>
+			<b is-accessible="true">groupId</b>
+		</field>
+		<field>
+			<a key="artifactId">this</a>
+			<b is-accessible="true">artifactId</b>
+		</field>
+		<field>
+			<a key="version">this</a>
+			<b is-accessible="true">version</b>
+		</field>
+	</mapping>
+
+</mappings>

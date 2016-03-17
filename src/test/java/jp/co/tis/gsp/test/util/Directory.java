@@ -4,13 +4,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Directory extends Entry {
 
 	protected List<Entry> list = new ArrayList<Entry>();
 
-	public Directory(String path) {
-		this.path = path;
+	public Directory(String path, String rootPath) {
+		if (path.equals(rootPath)) {
+			this.path = IS_ROOT;
+		} else {
+			this.path = path;
+		}
+
+		this.root = rootPath;
 	}
 
 	public List<Entry> getList() {
@@ -18,21 +25,16 @@ public class Directory extends Entry {
 	}
 
 	public Entry add(Entry entry) {
-		// ルートディレクトリの設定.
-		if (this.root == null) {
-			this.root = this.path;
-		}
-
-		entry.root = this.path;
-
+		entry.path = entry.path.replaceFirst("^" + Pattern.quote(root + SEP), "");
+		entry.root = this.root;
 		list.add(entry);
 		return this;
 	}
 
 	@Override
 	public void debugPrint() {
-		System.out.println(this);
-		System.out.println(root);
+		System.out.println(this.getFullPath());
+//		System.out.println(root);
 		Iterator<Entry> it = list.iterator();
 		while (it.hasNext()) {
 			Entry entry = it.next();
