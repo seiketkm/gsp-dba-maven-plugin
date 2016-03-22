@@ -18,7 +18,8 @@
 		<class-a map-get-method="getProperty">
 			java.util.Properties
 		</class-a>
-		<class-b map-null="false" map-empty-string="false">jp.co.tis.gsp.tools.dba.mojo.AbstractDbaMojo</class-b>
+		<class-b map-null="false" map-empty-string="false">jp.co.tis.gsp.tools.dba.mojo.AbstractDbaMojo
+		</class-b>
 		<field>
 			<a key="driver">this</a>
 			<b is-accessible="true">driver</b>
@@ -50,6 +51,10 @@
 		<field>
 			<a key="dmpFile">this</a>
 			<b is-accessible="true">dmpFile</b>
+		</field>
+		<field custom-converter="jp.co.tis.gsp.test.util.dozer.StrintSimpleKVMapConverter">
+			<a key="optionalDialects">this</a>
+			<b is-accessible="true">optionalDialects</b>
 		</field>
 	</mapping>
 

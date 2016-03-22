@@ -13,9 +13,9 @@ public class DirUtilTest {
 
 	@Test
 	public void testEqualCase() {
-
 		String path = this.getClass().getResource("DirUtil/Equal").getPath();
 
+	
 		File rootDir = new File(path);
 		File[] list = rootDir.listFiles();
 
@@ -29,6 +29,16 @@ public class DirUtilTest {
 
 	@Test
 	public void testDifferentCase() {
+		String path = this.getClass().getResource("DirUtil/Different").getPath();
 
+		File rootDir = new File(path);
+		File[] list = rootDir.listFiles();
+
+		for (File f : list) {
+			Entry a = DirUtil.collectEntry(f.getAbsolutePath() + SEP + "A");
+			Entry b = DirUtil.collectEntry(f.getAbsolutePath() + SEP + "B");
+
+			assertThat("Test : " + f.getName(), a.equals(b), is(false));
+		}
 	}
 }
