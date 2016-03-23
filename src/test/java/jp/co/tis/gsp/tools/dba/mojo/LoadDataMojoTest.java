@@ -13,7 +13,7 @@ public class LoadDataMojoTest extends AbstractDdlMojoTest<LoadDataMojo> {
 	 * @throws Exception
 	 */
 	@Test
-	@TestCasePattern(testCase = "case1", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2, TestDB.h2,
+	@TestCasePattern(testCase = "type_test", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2, TestDB.h2,
 			TestDB.sqlserver, TestDB.mysql })
 	public void testCase1() throws Exception {
 
