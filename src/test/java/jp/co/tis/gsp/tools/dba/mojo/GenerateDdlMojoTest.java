@@ -13,14 +13,14 @@ import jp.co.tis.gsp.test.util.TestCasePattern;
 public class GenerateDdlMojoTest extends AbstractDdlMojoTest<GenerateDdlMojo> {
 
 	/**
-	 * 様々なデータ型でのDDL生成テスト。
+	 * GSPでサポートするデータ型のテスト.
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 	@TestCasePattern(testCase = "type_test", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2, TestDB.h2,
 			TestDB.sqlserver, TestDB.mysql })
-	public void testCase1() throws Exception {
+	public void typeTest() throws Exception {
 
 		// 指定されたケース及びテスト対象のDBだけループ
 		for (MojoTestFixture mf : mojoTestFixtureList) {
@@ -35,11 +35,11 @@ public class GenerateDdlMojoTest extends AbstractDdlMojoTest<GenerateDdlMojo> {
 			String actualPath = mojo.outputDirectory.getAbsolutePath();
 
 			// 出力フォルダと期待値フォルダのファイルを収集
-//			Entry actualFiles = DirUtil.collectEntry(actualPath);
-//			Entry expectedFiles = DirUtil.collectEntry(getExpectedPath(mf) + "\\ddl");
+			Entry actualFiles = DirUtil.collectEntry(actualPath);
+			Entry expectedFiles = DirUtil.collectEntry(getExpectedPath(mf) + "\\ddl");
 
 			// フォルダ比較
-//			assertThat("TestDb:" + mf.testDb, actualFiles.equals(expectedFiles), is(true));
+			assertThat("TestDb:" + mf.testDb, actualFiles.equals(expectedFiles), is(true));
 		}
 	}
 
@@ -57,7 +57,7 @@ public class GenerateDdlMojoTest extends AbstractDdlMojoTest<GenerateDdlMojo> {
 	@Test
 	@TestCasePattern(testCase = "basic_test", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2, TestDB.h2,
 			TestDB.sqlserver, TestDB.mysql })
-	public void testCase2() throws Exception {
+	public void basicTest() throws Exception {
 
 		// 指定されたケース及びテスト対象のDBだけループ
 		for (MojoTestFixture mf : mojoTestFixtureList) {

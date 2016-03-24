@@ -23,7 +23,7 @@ public class ExecuteDdlMojoTest extends AbstractDdlMojoTest<ExecuteDdlMojo> {
 	@Test
 	@TestCasePattern(testCase = "type_test", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2, TestDB.h2,
 			TestDB.sqlserver, TestDB.mysql })
-	public void testCase1() throws Exception {
+	public void typeTest() throws Exception {
 
 		// 指定されたケース及びテスト対象のDBだけループ
 		for (MojoTestFixture mf : mojoTestFixtureList) {
