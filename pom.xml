@@ -98,18 +98,34 @@
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
-            <version>2.0</version>
+            <version>${mavenVersion}</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-archiver</artifactId>
             <version>2.4.4</version>
+            <exclusions>
+            	<exclusion>
+            		<artifactId>plexus-container-default</artifactId>
+            		<groupId>org.codehaus.plexus</groupId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugin-tools</groupId>
             <artifactId>maven-plugin-tools-annotations</artifactId>
             <version>${mavenPluginPluginVersion}</version>
             <scope>provided</scope>
+            <exclusions>
+            	<exclusion>
+            		<artifactId>maven-project</artifactId>
+            		<groupId>org.apache.maven</groupId>
+            	</exclusion>
+            	<exclusion>
+            		<artifactId>plexus-container-default</artifactId>
+            		<groupId>org.codehaus.plexus</groupId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -211,7 +227,82 @@
             <!--<version>11.2.0.2.0</version>-->
             <!--<scope>test</scope>-->
         <!--</dependency>-->
+        
+        <!-- Test -->
+        <dependency>
+            <groupId>org.apache.maven.plugin-testing</groupId>
+            <artifactId>maven-plugin-testing-harness</artifactId>
+            <version>2.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-compat</artifactId>
+            <version>${mavenVersion}</version>
+	            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-model</artifactId>
+            <version>${mavenVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-aether-provider</artifactId>
+            <version>${mavenVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.sonatype.sisu.inject</groupId>
+            <artifactId>guice-plexus-shim</artifactId>
+            <version>2.3.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.shared</groupId>
+            <artifactId>maven-invoker</artifactId>
+            <version>2.0.11</version>
+	            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.sonatype.aether</groupId>
+            <artifactId>aether-connector-file</artifactId>
+            <version>1.13.1</version>
+            <scope>test</scope>
+        </dependency>
 
+        <!-- TestDB JDBC Driver -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.2.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4-1206-jdbc42</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ibm</groupId>
+            <artifactId>db2jcc4</artifactId>
+            <version>9.7.200.358</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.37</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>4.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <profiles>

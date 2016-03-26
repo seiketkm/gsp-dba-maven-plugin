@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+	<localRepository>${MojoTestRoot}/testLocalRepo</localRepository>
+
+	<profiles>
+		<profile>
+			<id>h2</id>
+			<properties>
+				<db.schema></db.schema>
+				<db.user>gsptest</db.user>
+				<db.password>${db.user}</db.password>
+				<db.jdbcDriver>org.h2.Driver</db.jdbcDriver>
+				<db.url>jdbc:h2:./gsp_test</db.url>
+				<db.adminUser>sa</db.adminUser>
+				<db.adminPassword></db.adminPassword>
+				<dba.useDB>h2</dba.useDB>
+			</properties>
+		</profile>
+		<profile>
+			<id>db2</id>
+			<properties>
+				<db.schema>gsptest</db.schema>
+				<db.user>${db.schema}</db.user>
+				<db.password>Gsptest123</db.password>
+				<db.jdbcDriver>com.ibm.db2.jcc.DB2Driver</db.jdbcDriver>
+				<db.url>jdbc:db2://localhost:50000/gsptest</db.url>
+				<db.adminUser>db2admin</db.adminUser>
+				<db.adminPassword>password</db.adminPassword>
+				<dba.useDB>db2</dba.useDB>
+			</properties>
+		</profile>
+		<profile>
+			<id>oracle</id>
+			<properties>
+				<db.schema>gsptest</db.schema>
+				<db.user>${db.schema}</db.user>
+				<db.password>${db.schema}</db.password>
+				<db.jdbcDriver>oracle.jdbc.driver.OracleDriver</db.jdbcDriver>
+				<db.url>jdbc:oracle:thin:@localhost:1521/xe</db.url>
+				<db.adminUser>system</db.adminUser>
+				<db.adminPassword>oracle</db.adminPassword>
+				<dba.useDB>mysql</dba.useDB>
+			</properties>
+		</profile>
+		<profile>
+			<id>mysql</id>
+			<properties>
+				<db.schema>gsptest</db.schema>
+				<db.user>${db.schema}</db.user>
+				<db.password>${db.schema}</db.password>
+				<db.jdbcDriver>com.mysql.jdbc.Driver</db.jdbcDriver>
+				<db.url>jdbc:mysql://localhost:3306/gsptest</db.url>
+				<db.adminUser>root</db.adminUser>
+				<db.adminPassword>password</db.adminPassword>
+				<dba.useDB>mysql</dba.useDB>
+			</properties>
+		</profile>
+		<profile>
+			<id>postgresql</id>
+			<properties>
+				<db.schema>gsptest</db.schema>
+				<db.user>${db.schema}</db.user>
+				<db.password>${db.schema}</db.password>
+				<db.jdbcDriver>org.postgresql.Driver</db.jdbcDriver>
+				<db.url>jdbc:postgresql://localhost:5432/gsptest</db.url>
+				<db.adminUser>postgres</db.adminUser>
+				<db.adminPassword>postgres</db.adminPassword>
+				<dba.useDB>postgres</dba.useDB>
+			</properties>
+		</profile>
+		<profile>
+			<id>sqlserver</id>
+			<properties>
+				<db.schema>gsptest</db.schema>
+				<db.user>${db.schema}</db.user>
+				<db.password>${db.schema}</db.password>
+				<db.jdbcDriver>com.microsoft.sqlserver.jdbc.SQLServerDriver</db.jdbcDriver>
+				<db.url>jdbc:sqlserver://172.19.118.54:56211;database=gsptest</db.url>
+				<db.adminUser>sa</db.adminUser>
+				<db.adminPassword>Gsptest123</db.adminPassword>
+				<dba.useDB>sqlserver</dba.useDB>
+			</properties>
+		</profile>
+	</profiles>
+
+	<!-- activeProfiles | List of profiles that are active for all builds. | 
+		<activeProfiles> <activeProfile>alwaysActiveProfile</activeProfile> <activeProfile>anotherAlwaysActiveProfile</activeProfile> 
+		</activeProfiles> -->
+</settings>
