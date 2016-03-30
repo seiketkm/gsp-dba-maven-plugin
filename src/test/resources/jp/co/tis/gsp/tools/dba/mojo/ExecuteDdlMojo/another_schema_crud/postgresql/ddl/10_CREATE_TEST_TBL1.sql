@@ -1,0 +1,3 @@
+CREATE TABLE gspanother.TEST_TBL1 (
+  NAME VARCHAR(30)
+);

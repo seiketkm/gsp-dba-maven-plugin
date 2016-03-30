@@ -2,6 +2,7 @@ package jp.co.tis.gsp.tools.dba.mojo;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -45,18 +46,20 @@ import org.codehaus.plexus.configuration.xml.XmlPlexusConfiguration;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.experimental.theories.Theories;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
-import org.junit.runners.BlockJUnit4ClassRunner;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.framework.util.tiger.ReflectionUtil;
 import org.sonatype.aether.util.DefaultRepositorySystemSession;
 
 import jp.co.tis.gsp.test.util.MojoTestFixture;
 import jp.co.tis.gsp.test.util.TestCasePattern;
+import jp.co.tis.gsp.test.util.TestDB;
 
-@RunWith(BlockJUnit4ClassRunner.class)
+@RunWith(Theories.class)
 public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 
 	public static final String GENERATE_DDL = "generate-ddl";
@@ -104,7 +107,7 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 			// プロパティファイルにtestDBが設定されている場合。
 			// 設定されたtestDBがアノテーションに含まれている場合はそのtestDB要素だけの配列を返す
 			try {
-				String propPath = getMojoTestRoot() + "mojoTest.properties";
+				String propPath = getMojoTestRoot() + "/mojoTest.properties";
 				Properties prop = new Properties();
 				prop.load(new FileInputStream(new File(propPath)));
 
@@ -122,18 +125,12 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 			return tp.testDb();
 
 		}
-
+		
 		protected void finished(Description description) {
 			mojoTestFixtureList = null;
 		}
 	};
 
-	/**
-	 * テストデータベースの列挙子
-	 */
-	public enum TestDB {
-		oracle, db2, postgresql, mysql, sqlserver, h2;
-	}
 
 	/**
 	 * Mojoテストのルートディレクトリを取得する。
@@ -142,7 +139,7 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 	 * @throws Exception
 	 */
 	protected String getMojoTestRoot() throws Exception {
-		return this.getClass().getResource("").getPath().replaceFirst(System.getProperty("file.separator") + "$", "");
+		return new File(this.getClass().getResource("").getPath()).getAbsolutePath().replaceFirst(System.getProperty("file.separator") + "$", "");
 	}
 
 	/**
@@ -155,7 +152,7 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 	protected String getTestCaseDBPath(MojoTestFixture mf) throws Exception {
 		Class<?> mojoClass = Class.forName(mojoType.getTypeName());
 		String mojoSimpleName = mojoClass.getSimpleName();
-		return getMojoTestRoot() + mojoSimpleName + "/" + mf.caseName + "/" + mf.testDb;
+		return getMojoTestRoot() + "/" + mojoSimpleName + "/" + mf.caseName + "/" + mf.testDb;
 	}
 
 	/**
@@ -189,8 +186,9 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 	}
 
 	/**
-	 * オリジナルの実装がおかしいと思われるのでコピー修正実装。
+	 * オリジナルの実装がおかしいと思われるのでコピー修正実装でオーバーライド。
 	 * 
+	 * @see org.apache.maven.plugin.testing.AbstractMojoTestCase#lookupConfiguredMojo
 	 */
 	protected Mojo lookupConfiguredMojo(MavenSession session, MojoExecution execution)
 			throws Exception, ComponentConfigurationException {
@@ -210,17 +208,26 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 			configuration = new Xpp3Dom("configuration");
 		}
 
-		// ここ。マージ元、マージ先を逆にする。
+		
+		// ここ。オリジナル実装はマージ元とマージ先が逆になっていておかしいので、逆にする。
 		configuration = Xpp3Dom.mergeXpp3Dom(configuration, execution.getConfiguration());
+		
+		// finalizeMojoConfiguration()のタイミングもここで行う必要があるので追加。
+		execution.setConfiguration(configuration);
+		Method finalizeConfig = ReflectionUtil.getDeclaredMethod(AbstractMojoTestCase.class, "finalizeMojoConfiguration",
+				new Class[] { MojoExecution.class });
+		finalizeConfig.setAccessible(true);
+		ReflectionUtil.invoke(finalizeConfig, this, execution);
+		
 
-		PlexusConfiguration pluginConfiguration = new XmlPlexusConfiguration(configuration);
+		PlexusConfiguration pluginConfiguration = new XmlPlexusConfiguration(execution.getConfiguration());
 		ComponentConfigurator configurator = getContainer().lookup(ComponentConfigurator.class, "basic");
 		configurator.configureComponent(mojo, pluginConfiguration, evaluator, getContainer().getContainerRealm(), null);
 
 		return mojo;
 	}
 
-	protected E lookupConfiguredMojo(File pom, String goal, TestDB testDb) throws Exception {
+	public E lookupConfiguredMojo(File pom, String goal, TestDB testDb) throws Exception {
 
 		// Mojoテストリソースディレクトリのパスをシステムプロパティに設定しておく
 		System.setProperty("MojoTestRoot", getMojoTestRoot());

@@ -26,6 +26,7 @@
 					<user>${db.user}</user>
 					<password>${db.password}</password>
 					<schema>${db.schema}</schema>
+					<ddlDirectory>ddl</ddlDirectory>
 				</configuration>
 			</plugin>
 		</plugins>

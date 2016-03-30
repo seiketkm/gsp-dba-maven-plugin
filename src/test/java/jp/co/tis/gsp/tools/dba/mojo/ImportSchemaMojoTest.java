@@ -1,30 +1,17 @@
 package jp.co.tis.gsp.tools.dba.mojo;
 
 import java.io.File;
-import java.util.Collections;
 
-import org.apache.maven.DefaultMaven;
-import org.apache.maven.Maven;
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.repository.ArtifactRepositoryPolicy;
-import org.apache.maven.artifact.repository.MavenArtifactRepository;
-import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
-import org.apache.maven.execution.DefaultMavenExecutionRequest;
-import org.apache.maven.execution.DefaultMavenExecutionResult;
-import org.apache.maven.execution.MavenExecutionRequest;
-import org.apache.maven.execution.MavenExecutionRequestPopulator;
-import org.apache.maven.execution.MavenSession;
-import org.apache.maven.plugin.LegacySupport;
 import org.apache.maven.plugin.Mojo;
-import org.apache.maven.project.MavenProject;
 import org.apache.maven.repository.RepositorySystem;
 import org.junit.Test;
 import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;
-import org.sonatype.aether.util.DefaultRepositorySystemSession;
 
 import jp.co.tis.gsp.test.util.MojoTestFixture;
 import jp.co.tis.gsp.test.util.TestCasePattern;
+import jp.co.tis.gsp.test.util.TestDB;
 
 @RunWith(Theories.class)
 public class ImportSchemaMojoTest extends AbstractDdlMojoTest<ImportSchemaMojo> {
@@ -43,6 +30,11 @@ public class ImportSchemaMojoTest extends AbstractDdlMojoTest<ImportSchemaMojo> 
 
 			// テストケース対象プロジェクトのpom.xmlを取得
 			File pom = new File(getTestCaseDBPath(mf) + "/pom.xml");
+			
+			ExecuteDdlMojoTest ddlTest = new ExecuteDdlMojoTest();
+			ddlTest.setUp();
+			ExecuteDdlMojo ddlMojo = ddlTest.lookupConfiguredMojo(pom, EXECUTE_DDL, mf.testDb);
+			ddlMojo.execute();
 
 			// pom.xmlより指定ゴールのMojoを取得し実行。Mavenプロファイルを指定する(DB)
 			Mojo mojo = this.lookupConfiguredMojo(pom, IMPORT_SCHEMA, mf.testDb);

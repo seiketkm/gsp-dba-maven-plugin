@@ -1,0 +1,12 @@
+CREATE TABLE gspanother.TEST_TBL3 (
+  TEST_TBL3_ID BIGINT NOT NULL,
+  SEQTEST_AUTO BIGINT,
+  SEQTEST_ID BIGINT,
+  PRIMARY KEY (TEST_TBL3_ID)
+);
+COMMENT ON table gspanother.TEST_TBL3 is 'テストテーブル3';
+COMMENT ON column gspanother.TEST_TBL3.TEST_TBL3_ID is 'TEST_TBL3_ID';
+COMMENT ON column gspanother.TEST_TBL3.SEQTEST_AUTO is 'SEQTEST_AUTO';
+COMMENT ON column gspanother.TEST_TBL3.SEQTEST_ID is 'SEQTEST_ID';
+CREATE SEQUENCE gspanother.TEST_TBL3_ID_SEQ increment by 1 start with 1;
+CREATE SEQUENCE gspanother.SEQTEST_AUTO_USEQ increment by 1 start with 1;

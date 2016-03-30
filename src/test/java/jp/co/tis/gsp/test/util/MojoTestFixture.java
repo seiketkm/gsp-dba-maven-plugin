@@ -1,7 +1,5 @@
 package jp.co.tis.gsp.test.util;
 
-import jp.co.tis.gsp.tools.dba.mojo.AbstractDdlMojoTest.TestDB;
-
 /**
  * 各テストメソッドでMojoを生成するためのテストケース・DBパターン情報を保持するクラス.
  */

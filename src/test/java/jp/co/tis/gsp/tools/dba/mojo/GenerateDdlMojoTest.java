@@ -2,29 +2,24 @@ package jp.co.tis.gsp.tools.dba.mojo;
 
 import java.io.File;
 
-import org.apache.maven.execution.DefaultMavenExecutionRequest;
-import org.apache.maven.execution.MavenExecutionRequest;
 import org.apache.maven.plugin.Mojo;
-import org.apache.maven.project.MavenProject;
-import org.apache.maven.project.ProjectBuilder;
-import org.apache.maven.project.ProjectBuildingRequest;
 import org.junit.Test;
 
 import jp.co.tis.gsp.test.util.MojoTestFixture;
 import jp.co.tis.gsp.test.util.TestCasePattern;
-import jp.co.tis.gsp.tools.dba.mojo.AbstractDdlMojoTest.TestDB;
+import jp.co.tis.gsp.test.util.TestDB;
 
 public class GenerateDdlMojoTest extends AbstractDdlMojoTest<GenerateDdlMojo> {
 
 	/**
-	 * 様々なデータ型でのDDL生成テスト。
+	 * GSPでサポートするデータ型でDDL生成テスト。
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 	@TestCasePattern(testCase = "type_test", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2, TestDB.h2,
 			TestDB.sqlserver, TestDB.mysql })
-	public void testCase1() throws Exception {
+	public void testType() throws Exception {
 
 		// 指定されたケース及びテスト対象のDBだけループ
 		for (MojoTestFixture mf : mojoTestFixtureList) {
@@ -36,58 +31,46 @@ public class GenerateDdlMojoTest extends AbstractDdlMojoTest<GenerateDdlMojo> {
 			Mojo mojo = this.lookupConfiguredMojo(pom, GENERATE_DDL, mf.testDb);
 			mojo.execute();
 
-			// 出力フォルダと期待値フォルダのファイルを収集
-			// Entry actualFiles = DirUtil.collectEntry(actualPath);
-			// Entry expectedFiles = DirUtil.collectEntry(getExpectedPath(mf) +
-			// "\\ddl");
-
-			// フォルダ比較
-			// assertThat("TestDb:" + mf.testDb,
-			// actualFiles.equals(expectedFiles), is(true));
 		}
 	}
 
 	/**
-	 * 基本的なデータベースの機能を使ったテスト。以下の機能のDDL生成テストを行う。
+	 * データベースの基本機能を使ったDDLの生成テスト。
 	 * 
 	 * <ul>
 	 * <li>主キー</li>
-	 * <li>外部キー</li>
+	 * <li>関連・外部キー</li>
 	 * <li>シーケンス</li>
+	 * <li>ビュー</li>
 	 * </ul>
 	 * 
 	 * @throws Exception
 	 */
 	@Test
-	@TestCasePattern(testCase = "basic_test", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2, TestDB.h2,
+	@TestCasePattern(testCase = "basic_depend", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2, TestDB.h2,
 			TestDB.sqlserver, TestDB.mysql })
-	public void testCase2() throws Exception {
+	public void testBasic() throws Exception {
 
 		// 指定されたケース及びテスト対象のDBだけループ
 		for (MojoTestFixture mf : mojoTestFixtureList) {
 
-			// ケース、データベースに応じてmojoにパラメータをバインドしてmojoを生成
-			// mojo = setUpMojo(mf, getTestCaseDBPath(mf) +
-			// "/mojo_pram.properties");
+			File pom = new File(getTestCaseDBPath(mf) + "/pom.xml");
 
-			// mojo実行
+			Mojo mojo = this.lookupConfiguredMojo(pom, GENERATE_DDL, mf.testDb);
 			mojo.execute();
 
-			// 検証
-			String actual = mojo.outputDirectory.getAbsolutePath();
-
-			// 出力フォルダと期待値フォルダのファイルを収集
-			// Entry actualFiles = DirUtil.collectEntry(actual);
-			// Entry expectedFiles = DirUtil.collectEntry(getExpectedPath(pf) +
-			// "\\ddl");
-			//
-			// // フォルダ比較
-			// assertThat(actualFiles.equals(expectedFiles), is(true));
 		}
 	}
 
+	/**
+	 * DDL生成テンプレートフォルダの参照先を変更するテスト。
+	 * 
+	 * test_templateフォルダを見るようにしてテスト。
+	 * 
+	 * @throws Exception
+	 */
 	@Test
-	@TestCasePattern(testCase = "ddlTemplateFileDir", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2,
+	@TestCasePattern(testCase = "ddlTemplateFileDir_test", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2,
 			TestDB.h2, TestDB.sqlserver, TestDB.mysql })
 	public void testDdlTemplateFileDir() throws Exception {
 		for (MojoTestFixture mf : mojoTestFixtureList) {
@@ -100,6 +83,48 @@ public class GenerateDdlMojoTest extends AbstractDdlMojoTest<GenerateDdlMojo> {
 			mojo.execute();
 
 		}
+	}
 
+	/**
+	 * パラメータ：lengthSemanticsのテスト。
+	 * 
+	 * oracleのみ。 {@code LengthSemantics.BYTE}の場合をテストする。
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	@TestCasePattern(testCase = "lengthSemantics_test", testDb = { TestDB.oracle })
+	public void testLengthSemantics() throws Exception {
+		for (MojoTestFixture mf : mojoTestFixtureList) {
+
+			// テストケース対象プロジェクトのpom.xmlを取得
+			File pom = new File(getTestCaseDBPath(mf) + "/pom.xml");
+
+			// pom.xmlより指定ゴールのMojoを取得し実行。Mavenプロファイルを指定する(DB)
+			Mojo mojo = this.lookupConfiguredMojo(pom, GENERATE_DDL, mf.testDb);
+			mojo.execute();
+
+		}
+	}
+
+	/**
+	 * ユーザ名とスキーマ名が異なる場合のテスト。
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	@TestCasePattern(testCase = "another_schema_test", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.sqlserver,
+			TestDB.db2, TestDB.mysql })
+	public void testAnotherSchema() throws Exception {
+		for (MojoTestFixture mf : mojoTestFixtureList) {
+
+			// テストケース対象プロジェクトのpom.xmlを取得
+			File pom = new File(getTestCaseDBPath(mf) + "/pom.xml");
+
+			// pom.xmlより指定ゴールのMojoを取得し実行。Mavenプロファイルを指定する(DB)
+			Mojo mojo = this.lookupConfiguredMojo(pom, GENERATE_DDL, mf.testDb);
+			mojo.execute();
+
+		}
 	}
 }

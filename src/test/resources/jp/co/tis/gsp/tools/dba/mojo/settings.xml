@@ -18,12 +18,14 @@
 				<db.adminUser>sa</db.adminUser>
 				<db.adminPassword></db.adminPassword>
 				<dba.useDB>h2</dba.useDB>
+				<MojoTestRoot>${MojoTestRoot}</MojoTestRoot>
 			</properties>
 		</profile>
 		<profile>
 			<id>db2</id>
 			<properties>
 				<db.schema>gsptest</db.schema>
+				<db.anotherSchema>gspanother</db.anotherSchema>
 				<db.user>${db.schema}</db.user>
 				<db.password>Gsptest123</db.password>
 				<db.jdbcDriver>com.ibm.db2.jcc.DB2Driver</db.jdbcDriver>
@@ -31,25 +33,29 @@
 				<db.adminUser>db2admin</db.adminUser>
 				<db.adminPassword>password</db.adminPassword>
 				<dba.useDB>db2</dba.useDB>
+				<MojoTestRoot>${MojoTestRoot}</MojoTestRoot>
 			</properties>
 		</profile>
 		<profile>
 			<id>oracle</id>
 			<properties>
 				<db.schema>gsptest</db.schema>
+				<db.anotherSchema>gspanother</db.anotherSchema>
 				<db.user>${db.schema}</db.user>
 				<db.password>${db.schema}</db.password>
 				<db.jdbcDriver>oracle.jdbc.driver.OracleDriver</db.jdbcDriver>
 				<db.url>jdbc:oracle:thin:@localhost:1521/xe</db.url>
 				<db.adminUser>system</db.adminUser>
 				<db.adminPassword>oracle</db.adminPassword>
-				<dba.useDB>mysql</dba.useDB>
+				<dba.useDB>oracle</dba.useDB>
+				<MojoTestRoot>${MojoTestRoot}</MojoTestRoot>
 			</properties>
 		</profile>
 		<profile>
 			<id>mysql</id>
 			<properties>
 				<db.schema>gsptest</db.schema>
+				<db.anotherSchema>gspanother</db.anotherSchema>
 				<db.user>${db.schema}</db.user>
 				<db.password>${db.schema}</db.password>
 				<db.jdbcDriver>com.mysql.jdbc.Driver</db.jdbcDriver>
@@ -57,37 +63,38 @@
 				<db.adminUser>root</db.adminUser>
 				<db.adminPassword>password</db.adminPassword>
 				<dba.useDB>mysql</dba.useDB>
+				<MojoTestRoot>${MojoTestRoot}</MojoTestRoot>
 			</properties>
 		</profile>
 		<profile>
 			<id>postgresql</id>
 			<properties>
 				<db.schema>gsptest</db.schema>
+				<db.anotherSchema>gspanother</db.anotherSchema>
 				<db.user>${db.schema}</db.user>
 				<db.password>${db.schema}</db.password>
 				<db.jdbcDriver>org.postgresql.Driver</db.jdbcDriver>
 				<db.url>jdbc:postgresql://localhost:5432/gsptest</db.url>
 				<db.adminUser>postgres</db.adminUser>
 				<db.adminPassword>postgres</db.adminPassword>
-				<dba.useDB>postgres</dba.useDB>
+				<dba.useDB>postgresql</dba.useDB>
+				<MojoTestRoot>${MojoTestRoot}</MojoTestRoot>
 			</properties>
 		</profile>
 		<profile>
 			<id>sqlserver</id>
 			<properties>
 				<db.schema>gsptest</db.schema>
+				<db.anotherSchema>gspanother</db.anotherSchema>
 				<db.user>${db.schema}</db.user>
-				<db.password>${db.schema}</db.password>
+				<db.password>Gsptest123</db.password>
 				<db.jdbcDriver>com.microsoft.sqlserver.jdbc.SQLServerDriver</db.jdbcDriver>
 				<db.url>jdbc:sqlserver://172.19.118.54:56211;database=gsptest</db.url>
 				<db.adminUser>sa</db.adminUser>
 				<db.adminPassword>Gsptest123</db.adminPassword>
 				<dba.useDB>sqlserver</dba.useDB>
+				<MojoTestRoot>${MojoTestRoot}</MojoTestRoot>
 			</properties>
 		</profile>
 	</profiles>
-
-	<!-- activeProfiles | List of profiles that are active for all builds. | 
-		<activeProfiles> <activeProfile>alwaysActiveProfile</activeProfile> <activeProfile>anotherAlwaysActiveProfile</activeProfile> 
-		</activeProfiles> -->
 </settings>
