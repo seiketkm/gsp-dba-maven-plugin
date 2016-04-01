@@ -47,7 +47,7 @@ public class GenerateDdlMojoTest extends AbstractDdlMojoTest<GenerateDdlMojo> {
 	 * @throws Exception
 	 */
 	@Test
-	@TestCasePattern(testCase = "basic_depend", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2, TestDB.h2,
+	@TestCasePattern(testCase = "basic_test", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2, TestDB.h2,
 			TestDB.sqlserver, TestDB.mysql })
 	public void testBasic() throws Exception {
 
@@ -63,7 +63,7 @@ public class GenerateDdlMojoTest extends AbstractDdlMojoTest<GenerateDdlMojo> {
 	}
 
 	/**
-	 * DDL生成テンプレートフォルダの参照先を変更するテスト。
+	 * パラメータ：ddlTemplateFileDirのテスト。
 	 * 
 	 * test_templateフォルダを見るようにしてテスト。
 	 * 

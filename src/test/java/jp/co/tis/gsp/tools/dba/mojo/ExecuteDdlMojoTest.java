@@ -1,24 +1,42 @@
 package jp.co.tis.gsp.tools.dba.mojo;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.Properties;
 
 import org.apache.maven.plugin.Mojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.junit.After;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.theories.Theories;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.seasar.framework.util.tiger.ReflectionUtil;
 
 import jp.co.tis.gsp.test.util.DBTestUtil;
 import jp.co.tis.gsp.test.util.MojoTestFixture;
 import jp.co.tis.gsp.test.util.TestCasePattern;
 import jp.co.tis.gsp.test.util.TestDB;
+import jp.co.tis.gsp.tools.dba.dialect.DialectFactory;
 import junit.framework.AssertionFailedError;
 
 @RunWith(Theories.class)
 public class ExecuteDdlMojoTest extends AbstractDdlMojoTest<ExecuteDdlMojo> {
+
+	@Rule
+	public ExpectedException expected = ExpectedException.none();
+
+	@After
+	public void after() {
+		Field classMap = ReflectionUtil.getDeclaredField(DialectFactory.class, "classMap");
+		classMap.setAccessible(true);
+		ReflectionUtil.setStaticValue(classMap, new HashMap<String, Class<?>>());
+	}
 
 	/**
 	 * GSPでサポートするデータ型でDDL生成テスト。
@@ -93,7 +111,8 @@ public class ExecuteDdlMojoTest extends AbstractDdlMojoTest<ExecuteDdlMojo> {
 			ExecuteDdlMojo mojo = this.lookupConfiguredMojo(pom, EXECUTE_DDL, mf.testDb);
 
 			// スキーマのドロップ
-			DBTestUtil.dropSchema(mojo.schema, mojo.adminUser, mojo.adminPassword, mojo.url, mf.testDb);
+			DBTestUtil.dropSchema(mojo.schema, mojo.user, mojo.password, mojo.adminUser, mojo.adminPassword, mojo.url,
+					mojo.driver, mf.testDb);
 
 			// 1回目
 			mojo.execute();
@@ -105,7 +124,7 @@ public class ExecuteDdlMojoTest extends AbstractDdlMojoTest<ExecuteDdlMojo> {
 	}
 
 	/**
-	 * スキーマが存在する・存在しない場合のテスト。
+	 * スキーマが存在しない場合のテスト(ユーザ≠スキーマ)。
 	 * 
 	 * @throws Exception
 	 */
@@ -124,12 +143,11 @@ public class ExecuteDdlMojoTest extends AbstractDdlMojoTest<ExecuteDdlMojo> {
 			ExecuteDdlMojo mojo = this.lookupConfiguredMojo(pom, EXECUTE_DDL, mf.testDb);
 
 			// スキーマのドロップ
-			DBTestUtil.dropSchema(mojo.schema, mojo.adminUser, mojo.adminPassword, mojo.url, mf.testDb);
+			DBTestUtil.dropSchema(mojo.schema, mojo.user, mojo.password, mojo.adminUser, mojo.adminPassword, mojo.url,
+					mojo.driver, mf.testDb);
 
-			// 1回目
 			mojo.execute();
 
-			// 2回目
 			mojo.execute();
 
 		}
@@ -159,13 +177,13 @@ public class ExecuteDdlMojoTest extends AbstractDdlMojoTest<ExecuteDdlMojo> {
 	}
 
 	/**
-	 * ユーザ名とスキーマ名が違う設定でユーザが別スキーマのテーブルを操作できるかテスト。
+	 * ユーザ≠スキーマの設定で、ユーザが対象スキーマのテーブルを操作できるかテスト。
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 	@TestCasePattern(testCase = "another_schema_crud", testDb = { TestDB.oracle, TestDB.postgresql, TestDB.db2,
-			TestDB.h2, TestDB.sqlserver, TestDB.mysql })
+			TestDB.sqlserver, TestDB.mysql })
 	public void testAnotherSchemaCrud() throws Exception {
 
 		// 指定されたケース及びテスト対象のDBだけループ
@@ -199,4 +217,52 @@ public class ExecuteDdlMojoTest extends AbstractDdlMojoTest<ExecuteDdlMojo> {
 		}
 	}
 
+	/**
+	 * パラメータ：optionalDialectsのテスト
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	@TestCasePattern(testCase = "optionalDialects_test1", testDb = { TestDB.h2 })
+	public void testOptionalDialects1() throws Exception {
+
+		// 指定されたケース及びテスト対象のDBだけループ
+		for (MojoTestFixture mf : mojoTestFixtureList) {
+
+			expected.expect(MojoExecutionException.class);
+			expected.expectMessage("OptionalDialectsTestDialect");
+
+			// テストケース対象プロジェクトのpom.xmlを取得
+			File pom = new File(getTestCaseDBPath(mf) + "/pom.xml");
+
+			// pom.xmlより指定ゴールのMojoを取得し実行。Mavenプロファイルを指定する(DB)
+			Mojo mojo = this.lookupConfiguredMojo(pom, EXECUTE_DDL, mf.testDb);
+			mojo.execute();
+		}
+	}
+
+	/**
+	 * パラメータ：optionalDialectsのテスト
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	@TestCasePattern(testCase = "optionalDialects_test2", testDb = { TestDB.h2 })
+	public void testOptionalDialects2() throws Exception {
+
+		// 指定されたケース及びテスト対象のDBだけループ
+		for (MojoTestFixture mf : mojoTestFixtureList) {
+
+			expected.expect(MojoExecutionException.class);
+			expected.expectMessage("OptionalDialectsTestDialect");
+
+			// テストケース対象プロジェクトのpom.xmlを取得
+			File pom = new File(getTestCaseDBPath(mf) + "/pom.xml");
+
+			// pom.xmlより指定ゴールのMojoを取得し実行。Mavenプロファイルを指定する(DB)
+			Mojo mojo = this.lookupConfiguredMojo(pom, EXECUTE_DDL, mf.testDb);
+			mojo.execute();
+
+		}
+	}
 }

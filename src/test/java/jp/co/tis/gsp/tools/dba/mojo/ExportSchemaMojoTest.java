@@ -20,7 +20,14 @@ public class ExportSchemaMojoTest extends AbstractDdlMojoTest<ExportSchemaMojo> 
 	public ExpectedException expected = ExpectedException.none();
 
 	/**
-	 * 基本機能のテスト。
+	 * データベースの基本機能を使ったDDLの実行テスト。
+	 * 
+	 * <ul>
+	 * <li>主キー</li>
+	 * <li>関連・外部キー</li>
+	 * <li>シーケンス</li>
+	 * <li>ビュー</li>
+	 * </ul>
 	 * 
 	 * @throws Exception
 	 */
@@ -33,6 +40,16 @@ public class ExportSchemaMojoTest extends AbstractDdlMojoTest<ExportSchemaMojo> 
 
 			// テストケース対象プロジェクトのpom.xmlを取得
 			File pom = new File(getTestCaseDBPath(mf) + "/pom.xml");
+
+			ExecuteDdlMojoTest ddlTest = new ExecuteDdlMojoTest();
+			ddlTest.setUp();
+			ExecuteDdlMojo ddlMojo = ddlTest.lookupConfiguredMojo(pom, EXECUTE_DDL, mf.testDb);
+			ddlMojo.execute();
+
+			LoadDataMojoTest loadTest = new LoadDataMojoTest();
+			loadTest.setUp();
+			LoadDataMojo loadMojo = loadTest.lookupConfiguredMojo(pom, LOAD_DATA, mf.testDb);
+			loadMojo.execute();
 
 			// pom.xmlより指定ゴールのMojoを取得し実行。Mavenプロファイルを指定する(DB)
 			Mojo mojo = this.lookupConfiguredMojo(pom, EXPORT_SCHEMA, mf.testDb);
@@ -78,6 +95,16 @@ public class ExportSchemaMojoTest extends AbstractDdlMojoTest<ExportSchemaMojo> 
 
 			// テストケース対象プロジェクトのpom.xmlを取得
 			File pom = new File(getTestCaseDBPath(mf) + "/pom.xml");
+
+			ExecuteDdlMojoTest ddlTest = new ExecuteDdlMojoTest();
+			ddlTest.setUp();
+			ExecuteDdlMojo ddlMojo = ddlTest.lookupConfiguredMojo(pom, EXECUTE_DDL, mf.testDb);
+			ddlMojo.execute();
+
+			LoadDataMojoTest loadTest = new LoadDataMojoTest();
+			loadTest.setUp();
+			LoadDataMojo loadMojo = loadTest.lookupConfiguredMojo(pom, LOAD_DATA, mf.testDb);
+			loadMojo.execute();
 
 			// pom.xmlより指定ゴールのMojoを取得し実行。Mavenプロファイルを指定する(DB)
 			Mojo mojo = this.lookupConfiguredMojo(pom, EXPORT_SCHEMA, mf.testDb);

@@ -21,6 +21,8 @@
 				<groupId>jp.co.tis.gsp</groupId>
 				<artifactId>gsp-dba-maven-plugin</artifactId>
 				<configuration>
+					<ddlDirectory>ddl</ddlDirectory>
+					<dataDirectory>data</dataDirectory>
 					<outputDirectory>dump</outputDirectory>
 				</configuration>
 			</plugin>

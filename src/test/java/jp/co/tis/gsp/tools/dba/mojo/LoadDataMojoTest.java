@@ -1,18 +1,22 @@
 package jp.co.tis.gsp.tools.dba.mojo;
 
+
 import java.io.File;
 
 import org.apache.maven.plugin.Mojo;
 import org.junit.Test;
 
+import jp.co.tis.gsp.test.util.DBTestUtil;
 import jp.co.tis.gsp.test.util.MojoTestFixture;
 import jp.co.tis.gsp.test.util.TestCasePattern;
 import jp.co.tis.gsp.test.util.TestDB;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
 
 public class LoadDataMojoTest extends AbstractDdlMojoTest<LoadDataMojo> {
 
 	/**
-	 * 様々なデータ型でのデータロード。
+	 * GSPでサポートするデータ型でDDL生成テスト。
 	 * 
 	 * @throws Exception
 	 */
@@ -33,9 +37,15 @@ public class LoadDataMojoTest extends AbstractDdlMojoTest<LoadDataMojo> {
 			ddlMojo.execute();
 
 			// pom.xmlより指定ゴールのMojoを取得し実行
-			Mojo mojo = this.lookupConfiguredMojo(pom, LOAD_DATA, mf.testDb);
+			LoadDataMojo mojo = this.lookupConfiguredMojo(pom, LOAD_DATA, mf.testDb);
 			mojo.execute();
-
+			
+			// 検証
+			String sql = "SELECT COUNT(*) FROM TYPETEST;";
+			int cnt = 0;
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(1));
+		
 		}
 	}
 
@@ -61,8 +71,26 @@ public class LoadDataMojoTest extends AbstractDdlMojoTest<LoadDataMojo> {
 			ddlMojo.execute();
 
 			// pom.xmlより指定ゴールのMojoを取得し実行
-			Mojo mojo = this.lookupConfiguredMojo(pom, LOAD_DATA, mf.testDb);
+			LoadDataMojo mojo = this.lookupConfiguredMojo(pom, LOAD_DATA, mf.testDb);
 			mojo.execute();
+			
+			// 検証
+			String sql = "SELECT COUNT(*) FROM A_TABLE;";
+			int cnt = 0;
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(300));
+			
+			sql = "SELECT COUNT(*) FROM B_TABLE;";
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(300));
+			
+			sql = "SELECT COUNT(*) FROM C_TABLE;";
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(300));
+			
+			sql = "SELECT COUNT(*) FROM D_TABLE;";
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(300));
 
 		}
 	}
@@ -89,8 +117,26 @@ public class LoadDataMojoTest extends AbstractDdlMojoTest<LoadDataMojo> {
 			ddlMojo.execute();
 
 			// pom.xmlより指定ゴールのMojoを取得し実行
-			Mojo mojo = this.lookupConfiguredMojo(pom, LOAD_DATA, mf.testDb);
+			LoadDataMojo mojo = this.lookupConfiguredMojo(pom, LOAD_DATA, mf.testDb);
 			mojo.execute();
+			
+			// 検証
+			String sql = "SELECT COUNT(*) FROM A_TABLE;";
+			int cnt = 0;
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(300));
+			
+			sql = "SELECT COUNT(*) FROM B_TABLE;";
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(300));
+			
+			sql = "SELECT COUNT(*) FROM C_TABLE;";
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(300));
+			
+			sql = "SELECT COUNT(*) FROM D_TABLE;";
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(300));
 
 		}
 	}
@@ -117,8 +163,26 @@ public class LoadDataMojoTest extends AbstractDdlMojoTest<LoadDataMojo> {
 			ddlMojo.execute();
 
 			// pom.xmlより指定ゴールのMojoを取得し実行
-			Mojo mojo = this.lookupConfiguredMojo(pom, LOAD_DATA, mf.testDb);
+			LoadDataMojo mojo = this.lookupConfiguredMojo(pom, LOAD_DATA, mf.testDb);
 			mojo.execute();
+			
+			// 検証
+			String sql = "SELECT COUNT(*) FROM A_TABLE;";
+			int cnt = 0;
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(300));
+			
+			sql = "SELECT COUNT(*) FROM B_TABLE;";
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(300));
+			
+			sql = "SELECT COUNT(*) FROM C_TABLE;";
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(300));
+			
+			sql = "SELECT COUNT(*) FROM D_TABLE;";
+			cnt = DBTestUtil.getCount(sql, mojo.url, mojo.user, mojo.password);
+			assertThat(cnt, is(300));
 
 		}
 	}

@@ -5,3 +5,5 @@ target
 .classpath
 .project
 .settings/
+src/test/gsp_test.mv.db
+src/test/gsp_test.trace.db

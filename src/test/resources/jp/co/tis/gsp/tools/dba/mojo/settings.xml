@@ -14,7 +14,7 @@
 				<db.user>gsptest</db.user>
 				<db.password>${db.user}</db.password>
 				<db.jdbcDriver>org.h2.Driver</db.jdbcDriver>
-				<db.url>jdbc:h2:./gsp_test</db.url>
+				<db.url>jdbc:h2:./src/test/gsp_test</db.url>
 				<db.adminUser>sa</db.adminUser>
 				<db.adminPassword></db.adminPassword>
 				<dba.useDB>h2</dba.useDB>

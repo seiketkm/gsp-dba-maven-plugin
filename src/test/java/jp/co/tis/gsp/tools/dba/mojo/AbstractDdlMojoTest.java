@@ -69,7 +69,8 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 	public static final String IMPORT_SCHEMA = "import-schema";
 	public static final String LOAD_DATA = "load-data";
 
-	protected Type mojoType = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+	protected Class<?> mojoType = (Class<?>) ((ParameterizedType) getClass().getGenericSuperclass())
+			.getActualTypeArguments()[0];
 	protected E mojo;
 	protected MavenExecutionRequest currentMavenExecutionRequest;
 
@@ -112,8 +113,16 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 				prop.load(new FileInputStream(new File(propPath)));
 
 				String testDb = prop.getProperty("testDB");
+
+				// mojoTest.properties にDBの指定がない場合は全ての
+				if (StringUtil.isBlank(testDb)) {
+					return tp.testDb();
+				}
+
 				if (!StringUtil.isBlank(testDb) && Arrays.asList(tp.testDb()).contains(TestDB.valueOf(testDb))) {
 					return new TestDB[] { TestDB.valueOf(testDb) };
+				} else {
+					return new TestDB[] {};
 				}
 
 			} catch (Exception e) {
@@ -121,16 +130,12 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 				return null;
 			}
 
-			// 上記以外は、アノテーション設定値をそのまま返す
-			return tp.testDb();
-
 		}
-		
+
 		protected void finished(Description description) {
 			mojoTestFixtureList = null;
 		}
 	};
-
 
 	/**
 	 * Mojoテストのルートディレクトリを取得する。
@@ -139,7 +144,8 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 	 * @throws Exception
 	 */
 	protected String getMojoTestRoot() throws Exception {
-		return new File(this.getClass().getResource("").getPath()).getAbsolutePath().replaceFirst(System.getProperty("file.separator") + "$", "");
+		return new File(this.getClass().getResource("").getPath()).getAbsolutePath()
+				.replaceFirst(System.getProperty("file.separator") + "$", "");
 	}
 
 	/**
@@ -150,7 +156,7 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 	 * @throws Exception
 	 */
 	protected String getTestCaseDBPath(MojoTestFixture mf) throws Exception {
-		Class<?> mojoClass = Class.forName(mojoType.getTypeName());
+		Class<?> mojoClass = Class.forName(mojoType.getName());
 		String mojoSimpleName = mojoClass.getSimpleName();
 		return getMojoTestRoot() + "/" + mojoSimpleName + "/" + mf.caseName + "/" + mf.testDb;
 	}
@@ -165,7 +171,7 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 	 * @return 期待値ファイルが格納されているルートフォルダ
 	 */
 	protected String getExpectedPath(MojoTestFixture mf) throws Exception {
-		Class<?> mojoClass = Class.forName(mojoType.getTypeName());
+		Class<?> mojoClass = Class.forName(mojoType.getName());
 		String mojoSimpleName = mojoClass.getSimpleName();
 		return getMojoTestRoot() + mojoSimpleName + "/" + mf.caseName + "/" + mf.testDb + "/expected";
 	}
@@ -208,17 +214,15 @@ public abstract class AbstractDdlMojoTest<E> extends AbstractMojoTestCase {
 			configuration = new Xpp3Dom("configuration");
 		}
 
-		
 		// ここ。オリジナル実装はマージ元とマージ先が逆になっていておかしいので、逆にする。
 		configuration = Xpp3Dom.mergeXpp3Dom(configuration, execution.getConfiguration());
-		
+
 		// finalizeMojoConfiguration()のタイミングもここで行う必要があるので追加。
 		execution.setConfiguration(configuration);
-		Method finalizeConfig = ReflectionUtil.getDeclaredMethod(AbstractMojoTestCase.class, "finalizeMojoConfiguration",
-				new Class[] { MojoExecution.class });
+		Method finalizeConfig = ReflectionUtil.getDeclaredMethod(AbstractMojoTestCase.class,
+				"finalizeMojoConfiguration", new Class[] { MojoExecution.class });
 		finalizeConfig.setAccessible(true);
 		ReflectionUtil.invoke(finalizeConfig, this, execution);
-		
 
 		PlexusConfiguration pluginConfiguration = new XmlPlexusConfiguration(execution.getConfiguration());
 		ComponentConfigurator configurator = getContainer().lookup(ComponentConfigurator.class, "basic");
